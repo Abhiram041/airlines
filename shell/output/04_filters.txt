@@ -1,0 +1,282 @@
+hbase:001:0> # 04_filters.hbase
+hbase:002:0> # Demonstrates 5 distinct HBase filters + Combined AND/OR filters + Date-Range Scan
+hbase:003:0> # All SingleColumnValueFilters on sparse columns set filterIfMissing=true (true, true)
+hbase:004:0> 
+hbase:005:0> # Filter 1: PrefixFilter
+hbase:006:0> # Real-World Question: "Find all flights operated by American Airlines (AA) to evaluate fleet schedule performance."
+hbase:007:0> scan 'flights', {FILTER => "PrefixFilter('AA#')", LIMIT => 3}
+ROW  COLUMN+CELL
+ AA#ABQ#20150101#0725#01184#DFW column=cancel:cancelled, timestamp=2026-10-06T17:06:26.052, value=0
+ AA#ABQ#20150101#0725#01184#DFW column=delay:air_system_delay, timestamp=2026-10-06T17:06:26.052, value=0003
+ AA#ABQ#20150101#0725#01184#DFW column=delay:airline_delay, timestamp=2026-10-06T17:06:26.052, value=0014
+ AA#ABQ#20150101#0725#01184#DFW column=delay:arr_delay, timestamp=2026-10-06T17:06:26.052, value=0017
+ AA#ABQ#20150101#0725#01184#DFW column=delay:dep_delay, timestamp=2026-10-06T17:06:26.052, value=0014
+ AA#ABQ#20150101#0725#01184#DFW column=delay:late_aircraft_delay, timestamp=2026-10-06T17:06:26.052, value=0000
+ AA#ABQ#20150101#0725#01184#DFW column=delay:security_delay, timestamp=2026-10-06T17:06:26.052, value=0000
+ AA#ABQ#20150101#0725#01184#DFW column=delay:weather_delay, timestamp=2026-10-06T17:06:26.052, value=0000
+ AA#ABQ#20150101#0725#01184#DFW column=info:airline_name, timestamp=2026-10-06T17:06:26.052, value=American Airlines Inc.
+ AA#ABQ#20150101#0725#01184#DFW column=info:dest, timestamp=2026-10-06T17:06:26.052, value=DFW
+ AA#ABQ#20150101#0725#01184#DFW column=info:distance, timestamp=2026-10-06T17:06:26.052, value=569
+ AA#ABQ#20150101#0725#01184#DFW column=info:origin, timestamp=2026-10-06T17:06:26.052, value=ABQ
+ AA#ABQ#20150101#0725#01184#DFW column=info:sched_dep, timestamp=2026-10-06T17:06:26.052, value=0725
+ AA#ABQ#20150101#0725#01184#DFW column=info:tail_no, timestamp=2026-10-06T17:06:26.052, value=N4YMAA
+ AA#ABQ#20150101#0900#00336#DFW column=cancel:cancelled, timestamp=2026-10-06T17:06:26.957, value=0
+ AA#ABQ#20150101#0900#00336#DFW column=delay:air_system_delay, timestamp=2026-10-06T17:06:26.957, value=0036
+ AA#ABQ#20150101#0900#00336#DFW column=delay:airline_delay, timestamp=2026-10-06T17:06:26.957, value=0000
+ AA#ABQ#20150101#0900#00336#DFW column=delay:arr_delay, timestamp=2026-10-06T17:06:26.957, value=0036
+ AA#ABQ#20150101#0900#00336#DFW column=delay:dep_delay, timestamp=2026-10-06T17:06:26.957, value=0000
+ AA#ABQ#20150101#0900#00336#DFW column=delay:late_aircraft_delay, timestamp=2026-10-06T17:06:26.957, value=0000
+ AA#ABQ#20150101#0900#00336#DFW column=delay:security_delay, timestamp=2026-10-06T17:06:26.957, value=0000
+ AA#ABQ#20150101#0900#00336#DFW column=delay:weather_delay, timestamp=2026-10-06T17:06:26.957, value=0000
+ AA#ABQ#20150101#0900#00336#DFW column=info:airline_name, timestamp=2026-10-06T17:06:26.957, value=American Airlines Inc.
+ AA#ABQ#20150101#0900#00336#DFW column=info:dest, timestamp=2026-10-06T17:06:26.957, value=DFW
+ AA#ABQ#20150101#0900#00336#DFW column=info:distance, timestamp=2026-10-06T17:06:26.957, value=569
+ AA#ABQ#20150101#0900#00336#DFW column=info:origin, timestamp=2026-10-06T17:06:26.957, value=ABQ
+ AA#ABQ#20150101#0900#00336#DFW column=info:sched_dep, timestamp=2026-10-06T17:06:26.957, value=0900
+ AA#ABQ#20150101#0900#00336#DFW column=info:tail_no, timestamp=2026-10-06T17:06:26.957, value=N479AA
+ AA#ABQ#20150101#1215#01662#DFW column=cancel:cancelled, timestamp=2026-10-06T17:06:28.105, value=1
+ AA#ABQ#20150101#1215#01662#DFW column=cancel:reason, timestamp=2026-10-06T17:06:28.105, value=B
+ AA#ABQ#20150101#1215#01662#DFW column=info:airline_name, timestamp=2026-10-06T17:06:28.105, value=American Airlines Inc.
+ AA#ABQ#20150101#1215#01662#DFW column=info:dest, timestamp=2026-10-06T17:06:28.105, value=DFW
+ AA#ABQ#20150101#1215#01662#DFW column=info:distance, timestamp=2026-10-06T17:06:28.105, value=569
+ AA#ABQ#20150101#1215#01662#DFW column=info:origin, timestamp=2026-10-06T17:06:28.105, value=ABQ
+ AA#ABQ#20150101#1215#01662#DFW column=info:sched_dep, timestamp=2026-10-06T17:06:28.105, value=1215
+ AA#ABQ#20150101#1215#01662#DFW column=info:tail_no, timestamp=2026-10-06T17:06:28.105, value=N4WJAA
+3 row(s)
+Took 1.3841 seconds
+hbase:008:0> 
+hbase:009:0> # Filter 2: SingleColumnValueFilter (> 60 mins arrival delay, filterIfMissing=true)
+hbase:010:0> # Real-World Question: "Identify flights with severe arrival delays (>1 hour) for operational audits."
+hbase:011:0> scan 'flights', {FILTER => "SingleColumnValueFilter('delay', 'arr_delay', >, 'binary:0060', true, true)", LIMIT => 3}
+ROW  COLUMN+CELL
+ AA#ABQ#20150102#1530#01024#DFW column=cancel:cancelled, timestamp=2026-10-06T17:06:31.165, value=0
+ AA#ABQ#20150102#1530#01024#DFW column=delay:air_system_delay, timestamp=2026-10-06T17:06:31.165, value=0016
+ AA#ABQ#20150102#1530#01024#DFW column=delay:airline_delay, timestamp=2026-10-06T17:06:31.165, value=0000
+ AA#ABQ#20150102#1530#01024#DFW column=delay:arr_delay, timestamp=2026-10-06T17:06:31.165, value=0068
+ AA#ABQ#20150102#1530#01024#DFW column=delay:dep_delay, timestamp=2026-10-06T17:06:31.165, value=0052
+ AA#ABQ#20150102#1530#01024#DFW column=delay:late_aircraft_delay, timestamp=2026-10-06T17:06:31.165, value=0052
+ AA#ABQ#20150102#1530#01024#DFW column=delay:security_delay, timestamp=2026-10-06T17:06:31.165, value=0000
+ AA#ABQ#20150102#1530#01024#DFW column=delay:weather_delay, timestamp=2026-10-06T17:06:31.165, value=0000
+ AA#ABQ#20150102#1530#01024#DFW column=info:airline_name, timestamp=2026-10-06T17:06:31.165, value=American Airlines Inc.
+ AA#ABQ#20150102#1530#01024#DFW column=info:dest, timestamp=2026-10-06T17:06:31.165, value=DFW
+ AA#ABQ#20150102#1530#01024#DFW column=info:distance, timestamp=2026-10-06T17:06:31.165, value=569
+ AA#ABQ#20150102#1530#01024#DFW column=info:origin, timestamp=2026-10-06T17:06:31.165, value=ABQ
+ AA#ABQ#20150102#1530#01024#DFW column=info:sched_dep, timestamp=2026-10-06T17:06:31.165, value=1530
+ AA#ABQ#20150102#1530#01024#DFW column=info:tail_no, timestamp=2026-10-06T17:06:31.165, value=N573AA
+ AA#ABQ#20150107#0724#01184#DFW column=cancel:cancelled, timestamp=2026-10-06T17:06:41.194, value=0
+ AA#ABQ#20150107#0724#01184#DFW column=delay:air_system_delay, timestamp=2026-10-06T17:06:41.194, value=0026
+ AA#ABQ#20150107#0724#01184#DFW column=delay:airline_delay, timestamp=2026-10-06T17:06:41.194, value=0499
+ AA#ABQ#20150107#0724#01184#DFW column=delay:arr_delay, timestamp=2026-10-06T17:06:41.194, value=0525
+ AA#ABQ#20150107#0724#01184#DFW column=delay:dep_delay, timestamp=2026-10-06T17:06:41.194, value=0499
+ AA#ABQ#20150107#0724#01184#DFW column=delay:late_aircraft_delay, timestamp=2026-10-06T17:06:41.194, value=0000
+ AA#ABQ#20150107#0724#01184#DFW column=delay:security_delay, timestamp=2026-10-06T17:06:41.194, value=0000
+ AA#ABQ#20150107#0724#01184#DFW column=delay:weather_delay, timestamp=2026-10-06T17:06:41.194, value=0000
+ AA#ABQ#20150107#0724#01184#DFW column=info:airline_name, timestamp=2026-10-06T17:06:41.194, value=American Airlines Inc.
+ AA#ABQ#20150107#0724#01184#DFW column=info:dest, timestamp=2026-10-06T17:06:41.194, value=DFW
+ AA#ABQ#20150107#0724#01184#DFW column=info:distance, timestamp=2026-10-06T17:06:41.194, value=569
+ AA#ABQ#20150107#0724#01184#DFW column=info:origin, timestamp=2026-10-06T17:06:41.194, value=ABQ
+ AA#ABQ#20150107#0724#01184#DFW column=info:sched_dep, timestamp=2026-10-06T17:06:41.194, value=0724
+ AA#ABQ#20150107#0724#01184#DFW column=info:tail_no, timestamp=2026-10-06T17:06:41.194, value=N571AA
+ AA#ABQ#20150113#0901#00336#DFW column=cancel:cancelled, timestamp=2026-10-06T17:06:48.560, value=0
+ AA#ABQ#20150113#0901#00336#DFW column=delay:air_system_delay, timestamp=2026-10-06T17:06:48.560, value=0031
+ AA#ABQ#20150113#0901#00336#DFW column=delay:airline_delay, timestamp=2026-10-06T17:06:48.560, value=0035
+ AA#ABQ#20150113#0901#00336#DFW column=delay:arr_delay, timestamp=2026-10-06T17:06:48.560, value=0066
+ AA#ABQ#20150113#0901#00336#DFW column=delay:dep_delay, timestamp=2026-10-06T17:06:48.560, value=0035
+ AA#ABQ#20150113#0901#00336#DFW column=delay:late_aircraft_delay, timestamp=2026-10-06T17:06:48.560, value=0000
+ AA#ABQ#20150113#0901#00336#DFW column=delay:security_delay, timestamp=2026-10-06T17:06:48.560, value=0000
+ AA#ABQ#20150113#0901#00336#DFW column=delay:weather_delay, timestamp=2026-10-06T17:06:48.560, value=0000
+ AA#ABQ#20150113#0901#00336#DFW column=info:airline_name, timestamp=2026-10-06T17:06:48.560, value=American Airlines Inc.
+ AA#ABQ#20150113#0901#00336#DFW column=info:dest, timestamp=2026-10-06T17:06:48.560, value=DFW
+ AA#ABQ#20150113#0901#00336#DFW column=info:distance, timestamp=2026-10-06T17:06:48.560, value=569
+ AA#ABQ#20150113#0901#00336#DFW column=info:origin, timestamp=2026-10-06T17:06:48.560, value=ABQ
+ AA#ABQ#20150113#0901#00336#DFW column=info:sched_dep, timestamp=2026-10-06T17:06:48.560, value=0901
+ AA#ABQ#20150113#0901#00336#DFW column=info:tail_no, timestamp=2026-10-06T17:06:48.560, value=N558AA
+3 row(s)
+Took 0.3481 seconds
+hbase:012:0> 
+hbase:013:0> # Filter 3: SingleColumnValueFilter (Cancelled flights, filterIfMissing=true)
+hbase:014:0> # Real-World Question: "Retrieve all cancelled flights to analyze dispatch reliability."
+hbase:015:0> scan 'flights', {FILTER => "SingleColumnValueFilter('cancel', 'cancelled', =, 'binary:1', true, true)", LIMIT => 3}
+ROW  COLUMN+CELL
+ AA#ABQ#20150101#1215#01662#DFW column=cancel:cancelled, timestamp=2026-10-06T17:06:28.105, value=1
+ AA#ABQ#20150101#1215#01662#DFW column=cancel:reason, timestamp=2026-10-06T17:06:28.105, value=B
+ AA#ABQ#20150101#1215#01662#DFW column=info:airline_name, timestamp=2026-10-06T17:06:28.105, value=American Airlines Inc.
+ AA#ABQ#20150101#1215#01662#DFW column=info:dest, timestamp=2026-10-06T17:06:28.105, value=DFW
+ AA#ABQ#20150101#1215#01662#DFW column=info:distance, timestamp=2026-10-06T17:06:28.105, value=569
+ AA#ABQ#20150101#1215#01662#DFW column=info:origin, timestamp=2026-10-06T17:06:28.105, value=ABQ
+ AA#ABQ#20150101#1215#01662#DFW column=info:sched_dep, timestamp=2026-10-06T17:06:28.105, value=1215
+ AA#ABQ#20150101#1215#01662#DFW column=info:tail_no, timestamp=2026-10-06T17:06:28.105, value=N4WJAA
+ AA#ABQ#20150223#0901#00336#DFW column=cancel:cancelled, timestamp=2026-10-06T17:08:13.703, value=1
+ AA#ABQ#20150223#0901#00336#DFW column=cancel:reason, timestamp=2026-10-06T17:08:13.703, value=B
+ AA#ABQ#20150223#0901#00336#DFW column=info:airline_name, timestamp=2026-10-06T17:08:13.703, value=American Airlines Inc.
+ AA#ABQ#20150223#0901#00336#DFW column=info:dest, timestamp=2026-10-06T17:08:13.703, value=DFW
+ AA#ABQ#20150223#0901#00336#DFW column=info:distance, timestamp=2026-10-06T17:08:13.703, value=569
+ AA#ABQ#20150223#0901#00336#DFW column=info:origin, timestamp=2026-10-06T17:08:13.703, value=ABQ
+ AA#ABQ#20150223#0901#00336#DFW column=info:sched_dep, timestamp=2026-10-06T17:08:13.703, value=0901
+ AA#ABQ#20150223#0901#00336#DFW column=info:tail_no, timestamp=2026-10-06T17:08:13.703, value=N472AA
+ AA#ABQ#20150223#1055#02255#DFW column=cancel:cancelled, timestamp=2026-10-06T17:08:13.925, value=1
+ AA#ABQ#20150223#1055#02255#DFW column=cancel:reason, timestamp=2026-10-06T17:08:13.925, value=B
+ AA#ABQ#20150223#1055#02255#DFW column=info:airline_name, timestamp=2026-10-06T17:08:13.925, value=American Airlines Inc.
+ AA#ABQ#20150223#1055#02255#DFW column=info:dest, timestamp=2026-10-06T17:08:13.925, value=DFW
+ AA#ABQ#20150223#1055#02255#DFW column=info:distance, timestamp=2026-10-06T17:08:13.925, value=569
+ AA#ABQ#20150223#1055#02255#DFW column=info:origin, timestamp=2026-10-06T17:08:13.925, value=ABQ
+ AA#ABQ#20150223#1055#02255#DFW column=info:sched_dep, timestamp=2026-10-06T17:08:13.925, value=1055
+3 row(s)
+Took 0.1962 seconds
+hbase:016:0> 
+hbase:017:0> # Filter 4: ValueFilter (Reason 'B' for weather)
+hbase:018:0> # Real-World Question: "Isolate flights cancelled specifically due to severe weather events (Reason 'B')."
+hbase:019:0> scan 'flights', {FILTER => "ValueFilter(=, 'binary:B')", LIMIT => 3}
+ROW  COLUMN+CELL
+ AA#ABQ#20150101#1215#01662#DFW column=cancel:reason, timestamp=2026-10-06T17:06:28.105, value=B
+ AA#ABQ#20150223#0901#00336#DFW column=cancel:reason, timestamp=2026-10-06T17:08:13.703, value=B
+ AA#ABQ#20150223#1055#02255#DFW column=cancel:reason, timestamp=2026-10-06T17:08:13.925, value=B
+3 row(s)
+Took 0.0652 seconds
+hbase:020:0> 
+hbase:021:0> # Filter 5: ColumnPrefixFilter ('arr')
+hbase:022:0> # Real-World Question: "Inspect only arrival metrics ('arr_') across flights to streamline passenger arrival displays."
+hbase:023:0> scan 'flights', {FILTER => "ColumnPrefixFilter('arr')", LIMIT => 3}
+ROW  COLUMN+CELL
+ AA#ABQ#20150101#0725#01184#DFW column=delay:arr_delay, timestamp=2026-10-06T17:06:26.052, value=0017
+ AA#ABQ#20150101#0900#00336#DFW column=delay:arr_delay, timestamp=2026-10-06T17:06:26.957, value=0036
+ AA#ABQ#20150101#1530#01024#DFW column=delay:arr_delay, timestamp=2026-10-06T17:06:28.811, value=0013
+3 row(s)
+Took 0.0370 seconds
+hbase:024:0> 
+hbase:025:0> # Combined Filter 1 (Logical AND): AA flights AND Arrival Delay > 60 minutes
+hbase:026:0> # Real-World Question: "Which American Airlines flights suffered severe delays over 60 minutes?"
+hbase:027:0> scan 'flights', {FILTER => "(PrefixFilter('AA#')) AND (SingleColumnValueFilter('delay', 'arr_delay', >, 'binary:0060', true, true))", LIMIT => 3}
+ROW  COLUMN+CELL
+ AA#ABQ#20150102#1530#01024#DFW column=cancel:cancelled, timestamp=2026-10-06T17:06:31.165, value=0
+ AA#ABQ#20150102#1530#01024#DFW column=delay:air_system_delay, timestamp=2026-10-06T17:06:31.165, value=0016
+ AA#ABQ#20150102#1530#01024#DFW column=delay:airline_delay, timestamp=2026-10-06T17:06:31.165, value=0000
+ AA#ABQ#20150102#1530#01024#DFW column=delay:arr_delay, timestamp=2026-10-06T17:06:31.165, value=0068
+ AA#ABQ#20150102#1530#01024#DFW column=delay:dep_delay, timestamp=2026-10-06T17:06:31.165, value=0052
+ AA#ABQ#20150102#1530#01024#DFW column=delay:late_aircraft_delay, timestamp=2026-10-06T17:06:31.165, value=0052
+ AA#ABQ#20150102#1530#01024#DFW column=delay:security_delay, timestamp=2026-10-06T17:06:31.165, value=0000
+ AA#ABQ#20150102#1530#01024#DFW column=delay:weather_delay, timestamp=2026-10-06T17:06:31.165, value=0000
+ AA#ABQ#20150102#1530#01024#DFW column=info:airline_name, timestamp=2026-10-06T17:06:31.165, value=American Airlines Inc.
+ AA#ABQ#20150102#1530#01024#DFW column=info:dest, timestamp=2026-10-06T17:06:31.165, value=DFW
+ AA#ABQ#20150102#1530#01024#DFW column=info:distance, timestamp=2026-10-06T17:06:31.165, value=569
+ AA#ABQ#20150102#1530#01024#DFW column=info:origin, timestamp=2026-10-06T17:06:31.165, value=ABQ
+ AA#ABQ#20150102#1530#01024#DFW column=info:sched_dep, timestamp=2026-10-06T17:06:31.165, value=1530
+ AA#ABQ#20150102#1530#01024#DFW column=info:tail_no, timestamp=2026-10-06T17:06:31.165, value=N573AA
+ AA#ABQ#20150107#0724#01184#DFW column=cancel:cancelled, timestamp=2026-10-06T17:06:41.194, value=0
+ AA#ABQ#20150107#0724#01184#DFW column=delay:air_system_delay, timestamp=2026-10-06T17:06:41.194, value=0026
+ AA#ABQ#20150107#0724#01184#DFW column=delay:airline_delay, timestamp=2026-10-06T17:06:41.194, value=0499
+ AA#ABQ#20150107#0724#01184#DFW column=delay:arr_delay, timestamp=2026-10-06T17:06:41.194, value=0525
+ AA#ABQ#20150107#0724#01184#DFW column=delay:dep_delay, timestamp=2026-10-06T17:06:41.194, value=0499
+ AA#ABQ#20150107#0724#01184#DFW column=delay:late_aircraft_delay, timestamp=2026-10-06T17:06:41.194, value=0000
+ AA#ABQ#20150107#0724#01184#DFW column=delay:security_delay, timestamp=2026-10-06T17:06:41.194, value=0000
+ AA#ABQ#20150107#0724#01184#DFW column=delay:weather_delay, timestamp=2026-10-06T17:06:41.194, value=0000
+ AA#ABQ#20150107#0724#01184#DFW column=info:airline_name, timestamp=2026-10-06T17:06:41.194, value=American Airlines Inc.
+ AA#ABQ#20150107#0724#01184#DFW column=info:dest, timestamp=2026-10-06T17:06:41.194, value=DFW
+ AA#ABQ#20150107#0724#01184#DFW column=info:distance, timestamp=2026-10-06T17:06:41.194, value=569
+ AA#ABQ#20150107#0724#01184#DFW column=info:origin, timestamp=2026-10-06T17:06:41.194, value=ABQ
+ AA#ABQ#20150107#0724#01184#DFW column=info:sched_dep, timestamp=2026-10-06T17:06:41.194, value=0724
+ AA#ABQ#20150107#0724#01184#DFW column=info:tail_no, timestamp=2026-10-06T17:06:41.194, value=N571AA
+ AA#ABQ#20150113#0901#00336#DFW column=cancel:cancelled, timestamp=2026-10-06T17:06:48.560, value=0
+ AA#ABQ#20150113#0901#00336#DFW column=delay:air_system_delay, timestamp=2026-10-06T17:06:48.560, value=0031
+ AA#ABQ#20150113#0901#00336#DFW column=delay:airline_delay, timestamp=2026-10-06T17:06:48.560, value=0035
+ AA#ABQ#20150113#0901#00336#DFW column=delay:arr_delay, timestamp=2026-10-06T17:06:48.560, value=0066
+ AA#ABQ#20150113#0901#00336#DFW column=delay:dep_delay, timestamp=2026-10-06T17:06:48.560, value=0035
+ AA#ABQ#20150113#0901#00336#DFW column=delay:late_aircraft_delay, timestamp=2026-10-06T17:06:48.560, value=0000
+ AA#ABQ#20150113#0901#00336#DFW column=delay:security_delay, timestamp=2026-10-06T17:06:48.560, value=0000
+ AA#ABQ#20150113#0901#00336#DFW column=delay:weather_delay, timestamp=2026-10-06T17:06:48.560, value=0000
+ AA#ABQ#20150113#0901#00336#DFW column=info:airline_name, timestamp=2026-10-06T17:06:48.560, value=American Airlines Inc.
+ AA#ABQ#20150113#0901#00336#DFW column=info:dest, timestamp=2026-10-06T17:06:48.560, value=DFW
+ AA#ABQ#20150113#0901#00336#DFW column=info:distance, timestamp=2026-10-06T17:06:48.560, value=569
+ AA#ABQ#20150113#0901#00336#DFW column=info:origin, timestamp=2026-10-06T17:06:48.560, value=ABQ
+ AA#ABQ#20150113#0901#00336#DFW column=info:sched_dep, timestamp=2026-10-06T17:06:48.560, value=0901
+ AA#ABQ#20150113#0901#00336#DFW column=info:tail_no, timestamp=2026-10-06T17:06:48.560, value=N558AA
+3 row(s)
+Took 0.2547 seconds
+hbase:028:0> 
+hbase:029:0> # Combined Filter 2 (Logical OR): Cancelled due to Carrier (A) OR Weather (B)
+hbase:030:0> # Real-World Question: "Find flights cancelled due to airline operational failure or severe weather conditions."
+hbase:031:0> scan 'flights', {FILTER => "(SingleColumnValueFilter('cancel', 'reason', =, 'binary:A', true, true)) OR (SingleColumnValueFilter('cancel', 'reason', =, 'binary:B', true, true))", LIMIT => 3}
+ROW  COLUMN+CELL
+ AA#ABQ#20150101#1215#01662#DFW column=cancel:cancelled, timestamp=2026-10-06T17:06:28.105, value=1
+ AA#ABQ#20150101#1215#01662#DFW column=cancel:reason, timestamp=2026-10-06T17:06:28.105, value=B
+ AA#ABQ#20150101#1215#01662#DFW column=info:airline_name, timestamp=2026-10-06T17:06:28.105, value=American Airlines Inc.
+ AA#ABQ#20150101#1215#01662#DFW column=info:dest, timestamp=2026-10-06T17:06:28.105, value=DFW
+ AA#ABQ#20150101#1215#01662#DFW column=info:distance, timestamp=2026-10-06T17:06:28.105, value=569
+ AA#ABQ#20150101#1215#01662#DFW column=info:origin, timestamp=2026-10-06T17:06:28.105, value=ABQ
+ AA#ABQ#20150101#1215#01662#DFW column=info:sched_dep, timestamp=2026-10-06T17:06:28.105, value=1215
+ AA#ABQ#20150101#1215#01662#DFW column=info:tail_no, timestamp=2026-10-06T17:06:28.105, value=N4WJAA
+ AA#ABQ#20150223#0901#00336#DFW column=cancel:cancelled, timestamp=2026-10-06T17:08:13.703, value=1
+ AA#ABQ#20150223#0901#00336#DFW column=cancel:reason, timestamp=2026-10-06T17:08:13.703, value=B
+ AA#ABQ#20150223#0901#00336#DFW column=info:airline_name, timestamp=2026-10-06T17:08:13.703, value=American Airlines Inc.
+ AA#ABQ#20150223#0901#00336#DFW column=info:dest, timestamp=2026-10-06T17:08:13.703, value=DFW
+ AA#ABQ#20150223#0901#00336#DFW column=info:distance, timestamp=2026-10-06T17:08:13.703, value=569
+ AA#ABQ#20150223#0901#00336#DFW column=info:origin, timestamp=2026-10-06T17:08:13.703, value=ABQ
+ AA#ABQ#20150223#0901#00336#DFW column=info:sched_dep, timestamp=2026-10-06T17:08:13.703, value=0901
+ AA#ABQ#20150223#0901#00336#DFW column=info:tail_no, timestamp=2026-10-06T17:08:13.703, value=N472AA
+ AA#ABQ#20150223#1055#02255#DFW column=cancel:cancelled, timestamp=2026-10-06T17:08:13.925, value=1
+ AA#ABQ#20150223#1055#02255#DFW column=cancel:reason, timestamp=2026-10-06T17:08:13.925, value=B
+ AA#ABQ#20150223#1055#02255#DFW column=info:airline_name, timestamp=2026-10-06T17:08:13.925, value=American Airlines Inc.
+ AA#ABQ#20150223#1055#02255#DFW column=info:dest, timestamp=2026-10-06T17:08:13.925, value=DFW
+ AA#ABQ#20150223#1055#02255#DFW column=info:distance, timestamp=2026-10-06T17:08:13.925, value=569
+ AA#ABQ#20150223#1055#02255#DFW column=info:origin, timestamp=2026-10-06T17:08:13.925, value=ABQ
+ AA#ABQ#20150223#1055#02255#DFW column=info:sched_dep, timestamp=2026-10-06T17:08:13.925, value=1055
+3 row(s)
+Took 0.1868 seconds
+hbase:032:0> 
+hbase:033:0> # Date-Range Scan using STARTROW and STOPROW
+hbase:034:0> # Real-World Question: "Analyze flights departing from DFW on airline AA during the New Year travel window (Jan 1 - Jan 5, 2015)."
+hbase:035:0> scan 'flights', {STARTROW => 'AA#DFW#20150101', STOPROW => 'AA#DFW#20150106', LIMIT => 5}
+ROW  COLUMN+CELL
+ AA#DFW#20150101#0515#01057#MIA column=cancel:cancelled, timestamp=2026-10-06T17:06:26.052, value=0
+ AA#DFW#20150101#0515#01057#MIA column=delay:air_system_delay, timestamp=2026-10-06T17:06:26.052, value=0000
+ AA#DFW#20150101#0515#01057#MIA column=delay:airline_delay, timestamp=2026-10-06T17:06:26.052, value=0000
+ AA#DFW#20150101#0515#01057#MIA column=delay:arr_delay, timestamp=2026-10-06T17:06:26.052, value=0102
+ AA#DFW#20150101#0515#01057#MIA column=delay:dep_delay, timestamp=2026-10-06T17:06:26.052, value=0108
+ AA#DFW#20150101#0515#01057#MIA column=delay:late_aircraft_delay, timestamp=2026-10-06T17:06:26.052, value=0000
+ AA#DFW#20150101#0515#01057#MIA column=delay:security_delay, timestamp=2026-10-06T17:06:26.052, value=0000
+ AA#DFW#20150101#0515#01057#MIA column=delay:weather_delay, timestamp=2026-10-06T17:06:26.052, value=0102
+ AA#DFW#20150101#0515#01057#MIA column=info:airline_name, timestamp=2026-10-06T17:06:26.052, value=American Airlines Inc.
+ AA#DFW#20150101#0515#01057#MIA column=info:dest, timestamp=2026-10-06T17:06:26.052, value=MIA
+ AA#DFW#20150101#0515#01057#MIA column=info:distance, timestamp=2026-10-06T17:06:26.052, value=1121
+ AA#DFW#20150101#0515#01057#MIA column=info:origin, timestamp=2026-10-06T17:06:26.052, value=DFW
+ AA#DFW#20150101#0515#01057#MIA column=info:sched_dep, timestamp=2026-10-06T17:06:26.052, value=0515
+ AA#DFW#20150101#0515#01057#MIA column=info:tail_no, timestamp=2026-10-06T17:06:26.052, value=N3ASAA
+ AA#DFW#20150101#0600#00072#MCO column=cancel:cancelled, timestamp=2026-10-06T17:06:26.052, value=0
+ AA#DFW#20150101#0600#00072#MCO column=delay:arr_delay, timestamp=2026-10-06T17:06:26.052, value=0003
+ AA#DFW#20150101#0600#00072#MCO column=delay:dep_delay, timestamp=2026-10-06T17:06:26.052, value=0006
+ AA#DFW#20150101#0600#00072#MCO column=info:airline_name, timestamp=2026-10-06T17:06:26.052, value=American Airlines Inc.
+ AA#DFW#20150101#0600#00072#MCO column=info:dest, timestamp=2026-10-06T17:06:26.052, value=MCO
+ AA#DFW#20150101#0600#00072#MCO column=info:distance, timestamp=2026-10-06T17:06:26.052, value=985
+ AA#DFW#20150101#0600#00072#MCO column=info:origin, timestamp=2026-10-06T17:06:26.052, value=DFW
+ AA#DFW#20150101#0600#00072#MCO column=info:sched_dep, timestamp=2026-10-06T17:06:26.052, value=0600
+ AA#DFW#20150101#0600#00072#MCO column=info:tail_no, timestamp=2026-10-06T17:06:26.052, value=N5EKAA
+ AA#DFW#20150101#0600#01100#LGA column=cancel:cancelled, timestamp=2026-10-06T17:06:26.052, value=0
+ AA#DFW#20150101#0600#01100#LGA column=delay:arr_delay, timestamp=2026-10-06T17:06:26.052, value=0000
+ AA#DFW#20150101#0600#01100#LGA column=delay:dep_delay, timestamp=2026-10-06T17:06:26.052, value=0000
+ AA#DFW#20150101#0600#01100#LGA column=info:airline_name, timestamp=2026-10-06T17:06:26.052, value=American Airlines Inc.
+ AA#DFW#20150101#0600#01100#LGA column=info:dest, timestamp=2026-10-06T17:06:26.052, value=LGA
+ AA#DFW#20150101#0600#01100#LGA column=info:distance, timestamp=2026-10-06T17:06:26.052, value=1389
+ AA#DFW#20150101#0600#01100#LGA column=info:origin, timestamp=2026-10-06T17:06:26.052, value=DFW
+ AA#DFW#20150101#0600#01100#LGA column=info:sched_dep, timestamp=2026-10-06T17:06:26.052, value=0600
+ AA#DFW#20150101#0600#01100#LGA column=info:tail_no, timestamp=2026-10-06T17:06:26.052, value=N3GWAA
+ AA#DFW#20150101#0610#00168#MIA column=cancel:cancelled, timestamp=2026-10-06T17:06:26.052, value=0
+ AA#DFW#20150101#0610#00168#MIA column=delay:arr_delay, timestamp=2026-10-06T17:06:26.052, value=0000
+ AA#DFW#20150101#0610#00168#MIA column=delay:dep_delay, timestamp=2026-10-06T17:06:26.052, value=0000
+ AA#DFW#20150101#0610#00168#MIA column=info:airline_name, timestamp=2026-10-06T17:06:26.052, value=American Airlines Inc.
+ AA#DFW#20150101#0610#00168#MIA column=info:dest, timestamp=2026-10-06T17:06:26.052, value=MIA
+ AA#DFW#20150101#0610#00168#MIA column=info:distance, timestamp=2026-10-06T17:06:26.052, value=1121
+ AA#DFW#20150101#0610#00168#MIA column=info:origin, timestamp=2026-10-06T17:06:26.052, value=DFW
+ AA#DFW#20150101#0610#00168#MIA column=info:sched_dep, timestamp=2026-10-06T17:06:26.052, value=0610
+ AA#DFW#20150101#0610#00168#MIA column=info:tail_no, timestamp=2026-10-06T17:06:26.052, value=N5BSAA
+ AA#DFW#20150101#0615#01581#DCA column=cancel:cancelled, timestamp=2026-10-06T17:06:26.052, value=1
+ AA#DFW#20150101#0615#01581#DCA column=cancel:reason, timestamp=2026-10-06T17:06:26.052, value=B
+ AA#DFW#20150101#0615#01581#DCA column=info:airline_name, timestamp=2026-10-06T17:06:26.052, value=American Airlines Inc.
+ AA#DFW#20150101#0615#01581#DCA column=info:dest, timestamp=2026-10-06T17:06:26.052, value=DCA
+ AA#DFW#20150101#0615#01581#DCA column=info:distance, timestamp=2026-10-06T17:06:26.052, value=1192
+ AA#DFW#20150101#0615#01581#DCA column=info:origin, timestamp=2026-10-06T17:06:26.052, value=DFW
+ AA#DFW#20150101#0615#01581#DCA column=info:sched_dep, timestamp=2026-10-06T17:06:26.052, value=0615
+ AA#DFW#20150101#0615#01581#DCA column=info:tail_no, timestamp=2026-10-06T17:06:26.052, value=N3KGAA
+5 row(s)
+Took 0.3461 seconds
+hbase:036:0> 
+hbase:001:0> 

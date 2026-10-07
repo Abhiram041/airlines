@@ -1,0 +1,28 @@
+# 06_operators.hbase
+# Demonstrates all comparison operators (>, >=, <, <=, =, !=),
+# logical operators (AND, OR, NOT), and scan options (LIMIT, COLUMNS, STARTROW, STOPROW)
+# All SingleColumnValueFilters use filterIfMissing=true (true, true) on sparse column families
+
+# 1. Operator '>' : Severe arrival delay greater than 60 mins
+scan 'flights', {FILTER => "SingleColumnValueFilter('delay', 'arr_delay', >, 'binary:0060', true, true)", LIMIT => 2, COLUMNS => ['info:airline_name', 'delay:arr_delay']}
+
+# 2. Operator '>=' : Official FAA delay threshold (arrival delay >= 15 mins)
+scan 'flights', {FILTER => "SingleColumnValueFilter('delay', 'arr_delay', >=, 'binary:0015', true, true)", LIMIT => 2, COLUMNS => ['info:airline_name', 'delay:arr_delay']}
+
+# 3. Operator '<' : Strictly on-time arrival (< 15 mins delay)
+scan 'flights', {FILTER => "SingleColumnValueFilter('delay', 'arr_delay', <, 'binary:0015', true, true)", LIMIT => 2, COLUMNS => ['info:airline_name', 'delay:arr_delay']}
+
+# 4. Operator '<=' : Perfectly punctual departure (dep_delay <= 0000)
+scan 'flights', {FILTER => "SingleColumnValueFilter('delay', 'dep_delay', <=, 'binary:0000', true, true)", LIMIT => 2, COLUMNS => ['info:airline_name', 'delay:dep_delay']}
+
+# 5. Operator '=' : Confirmed flight cancellation (cancelled = 1)
+scan 'flights', {FILTER => "SingleColumnValueFilter('cancel', 'cancelled', =, 'binary:1', true, true)", LIMIT => 2, COLUMNS => ['info:airline_name', 'cancel:cancelled', 'cancel:reason']}
+
+# 6. Operator '!=' : Cancellations NOT caused by weather (reason != 'B')
+scan 'flights', {FILTER => "(SingleColumnValueFilter('cancel', 'cancelled', =, 'binary:1', true, true)) AND (SingleColumnValueFilter('cancel', 'reason', !=, 'binary:B', true, true))", LIMIT => 2, COLUMNS => ['info:airline_name', 'cancel:reason']}
+
+# 7. Logical AND + STARTROW + STOPROW: Date-bounded range with airline filter
+scan 'flights', {STARTROW => 'AA#DFW#20150101', STOPROW => 'AA#DFW#20150105', FILTER => "SingleColumnValueFilter('delay', 'arr_delay', >, 'binary:0030', true, true)", LIMIT => 2}
+
+# 8. Logical OR: Major carrier faults OR severe air traffic management delays
+scan 'flights', {FILTER => "(SingleColumnValueFilter('delay', 'airline_delay', >, 'binary:0045', true, true)) OR (SingleColumnValueFilter('delay', 'air_system_delay', >, 'binary:0045', true, true))", LIMIT => 2}

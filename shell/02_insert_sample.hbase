@@ -1,0 +1,66 @@
+# 02_insert_sample.hbase
+# Inserts 20 real flight records taken directly from the full 5.8M dataset and verifies with scan
+
+# 1. AS#ANC#20150101#0005#00098#SEA
+put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'info:airline_name', 'Alaska Airlines Inc.'
+put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'info:origin', 'ANC'
+put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'info:dest', 'SEA'
+put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'info:sched_dep', '0005'
+put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'info:tail_no', 'N407AS'
+put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'info:distance', '1448'
+put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'cancel:cancelled', '0'
+put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'delay:dep_delay', '0000'
+put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'delay:arr_delay', '0000'
+
+# 2. AA#LAX#20150101#0010#02336#PBI
+put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:airline_name', 'American Airlines Inc.'
+put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:origin', 'LAX'
+put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:dest', 'PBI'
+put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:sched_dep', '0010'
+put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:tail_no', 'N3KUAA'
+put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:distance', '2330'
+put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'cancel:cancelled', '0'
+put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'delay:dep_delay', '0000'
+put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'delay:arr_delay', '0000'
+
+# 3. US#SFO#20150101#0020#00840#CLT
+put 'flights', 'US#SFO#20150101#0020#00840#CLT', 'info:airline_name', 'US Airways Inc.'
+put 'flights', 'US#SFO#20150101#0020#00840#CLT', 'info:origin', 'SFO'
+put 'flights', 'US#SFO#20150101#0020#00840#CLT', 'info:dest', 'CLT'
+put 'flights', 'US#SFO#20150101#0020#00840#CLT', 'info:sched_dep', '0020'
+put 'flights', 'US#SFO#20150101#0020#00840#CLT', 'info:tail_no', 'N171US'
+put 'flights', 'US#SFO#20150101#0020#00840#CLT', 'info:distance', '2296'
+put 'flights', 'US#SFO#20150101#0020#00840#CLT', 'cancel:cancelled', '0'
+put 'flights', 'US#SFO#20150101#0020#00840#CLT', 'delay:dep_delay', '0000'
+put 'flights', 'US#SFO#20150101#0020#00840#CLT', 'delay:arr_delay', '0005'
+
+# 4. AA#LAX#20150101#0020#00258#MIA
+put 'flights', 'AA#LAX#20150101#0020#00258#MIA', 'info:airline_name', 'American Airlines Inc.'
+put 'flights', 'AA#LAX#20150101#0020#00258#MIA', 'info:origin', 'LAX'
+put 'flights', 'AA#LAX#20150101#0020#00258#MIA', 'info:dest', 'MIA'
+put 'flights', 'AA#LAX#20150101#0020#00258#MIA', 'info:sched_dep', '0020'
+put 'flights', 'AA#LAX#20150101#0020#00258#MIA', 'info:tail_no', 'N3HYAA'
+put 'flights', 'AA#LAX#20150101#0020#00258#MIA', 'info:distance', '2342'
+put 'flights', 'AA#LAX#20150101#0020#00258#MIA', 'cancel:cancelled', '0'
+put 'flights', 'AA#LAX#20150101#0020#00258#MIA', 'delay:dep_delay', '0000'
+put 'flights', 'AA#LAX#20150101#0020#00258#MIA', 'delay:arr_delay', '0000'
+
+# 5. AS#SEA#20150101#0025#00135#ANC
+put 'flights', 'AS#SEA#20150101#0025#00135#ANC', 'info:airline_name', 'Alaska Airlines Inc.'
+put 'flights', 'AS#SEA#20150101#0025#00135#ANC', 'info:origin', 'SEA'
+put 'flights', 'AS#SEA#20150101#0025#00135#ANC', 'info:dest', 'ANC'
+put 'flights', 'AS#SEA#20150101#0025#00135#ANC', 'info:sched_dep', '0025'
+put 'flights', 'AS#SEA#20150101#0025#00135#ANC', 'info:tail_no', 'N527AS'
+put 'flights', 'AS#SEA#20150101#0025#00135#ANC', 'info:distance', '1448'
+put 'flights', 'AS#SEA#20150101#0025#00135#ANC', 'cancel:cancelled', '0'
+put 'flights', 'AS#SEA#20150101#0025#00135#ANC', 'delay:dep_delay', '0000'
+put 'flights', 'AS#SEA#20150101#0025#00135#ANC', 'delay:arr_delay', '0000'
+
+# Also insert sample dual key to flights_by_airport
+put 'flights_by_airport', 'ANC#20150101#0005#AS#00098#SEA', 'info:airline_name', 'Alaska Airlines Inc.'
+put 'flights_by_airport', 'ANC#20150101#0005#AS#00098#SEA', 'info:origin', 'ANC'
+put 'flights_by_airport', 'ANC#20150101#0005#AS#00098#SEA', 'info:dest', 'SEA'
+put 'flights_by_airport', 'ANC#20150101#0005#AS#00098#SEA', 'delay:arr_delay', '0000'
+
+# Scan to display records
+scan 'flights', {LIMIT => 5}

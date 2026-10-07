@@ -1,0 +1,17 @@
+# 01_create_tables.hbase
+# Creates tables 'flights' and 'flights_by_airport' with column families: info, delay, cancel
+
+# 1. Disable and drop if already existing
+begin; disable 'flights'; drop 'flights'; rescue => e; end
+begin; disable 'flights_by_airport'; drop 'flights_by_airport'; rescue => e; end
+
+# 2. Create tables
+create 'flights', 'info', 'delay', 'cancel'
+create 'flights_by_airport', 'info', 'delay', 'cancel'
+
+# 3. List all tables to verify creation
+list
+
+# 4. Describe table schemas
+describe 'flights'
+describe 'flights_by_airport'

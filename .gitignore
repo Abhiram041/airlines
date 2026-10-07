@@ -1,0 +1,54 @@
+# Java build artifacts
+java/target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Maven
+.mvn/
+mvn-wrapper.jar
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.venv/
+venv/
+env/
+.env
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.classpath
+.project
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+wget-log*
+
+# HBase runtime artifacts (local, not needed in repo)
+*.tmp
+
+# Large raw data files (too large for GitHub - 781MB and 592MB)
+# These are source datasets downloaded from Kaggle/US DOT
+data/flights_full.csv
+airline dataset/flights.csv
+
+# Lock files from Office
+report/~$*

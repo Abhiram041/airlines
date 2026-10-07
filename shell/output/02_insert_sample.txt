@@ -1,0 +1,179 @@
+hbase:001:0> # 02_insert_sample.hbase
+hbase:002:0> # Inserts 20 real flight records taken directly from the full 5.8M dataset and verifies with scan
+hbase:003:0> 
+hbase:004:0> # 1. AS#ANC#20150101#0005#00098#SEA
+hbase:005:0> put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'info:airline_name', 'Alaska Airlines Inc.'
+Took 1.0447 seconds
+hbase:006:0> put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'info:origin', 'ANC'
+Took 0.0065 seconds
+hbase:007:0> put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'info:dest', 'SEA'
+Took 0.0062 seconds
+hbase:008:0> put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'info:sched_dep', '0005'
+Took 0.0119 seconds
+hbase:009:0> put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'info:tail_no', 'N407AS'
+Took 0.0054 seconds
+hbase:010:0> put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'info:distance', '1448'
+Took 0.0060 seconds
+hbase:011:0> put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'cancel:cancelled', '0'
+Took 0.0061 seconds
+hbase:012:0> put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'delay:dep_delay', '0000'
+Took 0.0066 seconds
+hbase:013:0> put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'delay:arr_delay', '0000'
+Took 0.0065 seconds
+hbase:014:0> 
+hbase:015:0> # 2. AA#LAX#20150101#0010#02336#PBI
+hbase:016:0> put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:airline_name', 'American Airlines Inc.'
+Took 0.0069 seconds
+hbase:017:0> put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:origin', 'LAX'
+Took 0.0113 seconds
+hbase:018:0> put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:dest', 'PBI'
+Took 0.0120 seconds
+hbase:019:0> put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:sched_dep', '0010'
+Took 0.0238 seconds
+hbase:020:0> put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:tail_no', 'N3KUAA'
+Took 0.0146 seconds
+hbase:021:0> put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:distance', '2330'
+Took 0.0260 seconds
+hbase:022:0> put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'cancel:cancelled', '0'
+Took 0.0217 seconds
+hbase:023:0> put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'delay:dep_delay', '0000'
+Took 0.0154 seconds
+hbase:024:0> put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'delay:arr_delay', '0000'
+Took 0.0116 seconds
+hbase:025:0> 
+hbase:026:0> # 3. US#SFO#20150101#0020#00840#CLT
+hbase:027:0> put 'flights', 'US#SFO#20150101#0020#00840#CLT', 'info:airline_name', 'US Airways Inc.'
+Took 0.0383 seconds
+hbase:028:0> put 'flights', 'US#SFO#20150101#0020#00840#CLT', 'info:origin', 'SFO'
+Took 0.0095 seconds
+hbase:029:0> put 'flights', 'US#SFO#20150101#0020#00840#CLT', 'info:dest', 'CLT'
+Took 0.0094 seconds
+hbase:030:0> put 'flights', 'US#SFO#20150101#0020#00840#CLT', 'info:sched_dep', '0020'
+Took 0.0091 seconds
+hbase:031:0> put 'flights', 'US#SFO#20150101#0020#00840#CLT', 'info:tail_no', 'N171US'
+Took 0.0112 seconds
+hbase:032:0> put 'flights', 'US#SFO#20150101#0020#00840#CLT', 'info:distance', '2296'
+Took 0.0167 seconds
+hbase:033:0> put 'flights', 'US#SFO#20150101#0020#00840#CLT', 'cancel:cancelled', '0'
+Took 0.0112 seconds
+hbase:034:0> put 'flights', 'US#SFO#20150101#0020#00840#CLT', 'delay:dep_delay', '0000'
+Took 0.0095 seconds
+hbase:035:0> put 'flights', 'US#SFO#20150101#0020#00840#CLT', 'delay:arr_delay', '0005'
+Took 0.0095 seconds
+hbase:036:0> 
+hbase:037:0> # 4. AA#LAX#20150101#0020#00258#MIA
+hbase:038:0> put 'flights', 'AA#LAX#20150101#0020#00258#MIA', 'info:airline_name', 'American Airlines Inc.'
+Took 0.0194 seconds
+hbase:039:0> put 'flights', 'AA#LAX#20150101#0020#00258#MIA', 'info:origin', 'LAX'
+Took 0.0142 seconds
+hbase:040:0> put 'flights', 'AA#LAX#20150101#0020#00258#MIA', 'info:dest', 'MIA'
+Took 0.0196 seconds
+hbase:041:0> put 'flights', 'AA#LAX#20150101#0020#00258#MIA', 'info:sched_dep', '0020'
+Took 0.0168 seconds
+hbase:042:0> put 'flights', 'AA#LAX#20150101#0020#00258#MIA', 'info:tail_no', 'N3HYAA'
+Took 0.0159 seconds
+hbase:043:0> put 'flights', 'AA#LAX#20150101#0020#00258#MIA', 'info:distance', '2342'
+Took 0.0169 seconds
+hbase:044:0> put 'flights', 'AA#LAX#20150101#0020#00258#MIA', 'cancel:cancelled', '0'
+Took 0.0179 seconds
+hbase:045:0> put 'flights', 'AA#LAX#20150101#0020#00258#MIA', 'delay:dep_delay', '0000'
+Took 0.0120 seconds
+hbase:046:0> put 'flights', 'AA#LAX#20150101#0020#00258#MIA', 'delay:arr_delay', '0000'
+Took 0.0153 seconds
+hbase:047:0> 
+hbase:048:0> # 5. AS#SEA#20150101#0025#00135#ANC
+hbase:049:0> put 'flights', 'AS#SEA#20150101#0025#00135#ANC', 'info:airline_name', 'Alaska Airlines Inc.'
+Took 0.0157 seconds
+hbase:050:0> put 'flights', 'AS#SEA#20150101#0025#00135#ANC', 'info:origin', 'SEA'
+Took 0.0090 seconds
+hbase:051:0> put 'flights', 'AS#SEA#20150101#0025#00135#ANC', 'info:dest', 'ANC'
+Took 0.0125 seconds
+hbase:052:0> put 'flights', 'AS#SEA#20150101#0025#00135#ANC', 'info:sched_dep', '0025'
+Took 0.0174 seconds
+hbase:053:0> put 'flights', 'AS#SEA#20150101#0025#00135#ANC', 'info:tail_no', 'N527AS'
+Took 0.0131 seconds
+hbase:054:0> put 'flights', 'AS#SEA#20150101#0025#00135#ANC', 'info:distance', '1448'
+Took 0.0079 seconds
+hbase:055:0> put 'flights', 'AS#SEA#20150101#0025#00135#ANC', 'cancel:cancelled', '0'
+Took 0.0081 seconds
+hbase:056:0> put 'flights', 'AS#SEA#20150101#0025#00135#ANC', 'delay:dep_delay', '0000'
+Took 0.0132 seconds
+hbase:057:0> put 'flights', 'AS#SEA#20150101#0025#00135#ANC', 'delay:arr_delay', '0000'
+Took 0.0062 seconds
+hbase:058:0> 
+hbase:059:0> # Also insert sample dual key to flights_by_airport
+hbase:060:0> put 'flights_by_airport', 'ANC#20150101#0005#AS#00098#SEA', 'info:airline_name', 'Alaska Airlines Inc.'
+Took 0.0313 seconds
+hbase:061:0> put 'flights_by_airport', 'ANC#20150101#0005#AS#00098#SEA', 'info:origin', 'ANC'
+Took 0.0075 seconds
+hbase:062:0> put 'flights_by_airport', 'ANC#20150101#0005#AS#00098#SEA', 'info:dest', 'SEA'
+Took 0.0068 seconds
+hbase:063:0> put 'flights_by_airport', 'ANC#20150101#0005#AS#00098#SEA', 'delay:arr_delay', '0000'
+Took 0.0078 seconds
+hbase:064:0> 
+hbase:065:0> # Scan to display records
+hbase:066:0> scan 'flights', {LIMIT => 5}
+ROW  COLUMN+CELL
+ AA#ABQ#20150101#0725#01184#DFW column=cancel:cancelled, timestamp=2026-10-06T17:06:26.052, value=0
+ AA#ABQ#20150101#0725#01184#DFW column=delay:air_system_delay, timestamp=2026-10-06T17:06:26.052, value=0003
+ AA#ABQ#20150101#0725#01184#DFW column=delay:airline_delay, timestamp=2026-10-06T17:06:26.052, value=0014
+ AA#ABQ#20150101#0725#01184#DFW column=delay:arr_delay, timestamp=2026-10-06T17:06:26.052, value=0017
+ AA#ABQ#20150101#0725#01184#DFW column=delay:dep_delay, timestamp=2026-10-06T17:06:26.052, value=0014
+ AA#ABQ#20150101#0725#01184#DFW column=delay:late_aircraft_delay, timestamp=2026-10-06T17:06:26.052, value=0000
+ AA#ABQ#20150101#0725#01184#DFW column=delay:security_delay, timestamp=2026-10-06T17:06:26.052, value=0000
+ AA#ABQ#20150101#0725#01184#DFW column=delay:weather_delay, timestamp=2026-10-06T17:06:26.052, value=0000
+ AA#ABQ#20150101#0725#01184#DFW column=info:airline_name, timestamp=2026-10-06T17:06:26.052, value=American Airlines Inc.
+ AA#ABQ#20150101#0725#01184#DFW column=info:dest, timestamp=2026-10-06T17:06:26.052, value=DFW
+ AA#ABQ#20150101#0725#01184#DFW column=info:distance, timestamp=2026-10-06T17:06:26.052, value=569
+ AA#ABQ#20150101#0725#01184#DFW column=info:origin, timestamp=2026-10-06T17:06:26.052, value=ABQ
+ AA#ABQ#20150101#0725#01184#DFW column=info:sched_dep, timestamp=2026-10-06T17:06:26.052, value=0725
+ AA#ABQ#20150101#0725#01184#DFW column=info:tail_no, timestamp=2026-10-06T17:06:26.052, value=N4YMAA
+ AA#ABQ#20150101#0900#00336#DFW column=cancel:cancelled, timestamp=2026-10-06T17:06:26.957, value=0
+ AA#ABQ#20150101#0900#00336#DFW column=delay:air_system_delay, timestamp=2026-10-06T17:06:26.957, value=0036
+ AA#ABQ#20150101#0900#00336#DFW column=delay:airline_delay, timestamp=2026-10-06T17:06:26.957, value=0000
+ AA#ABQ#20150101#0900#00336#DFW column=delay:arr_delay, timestamp=2026-10-06T17:06:26.957, value=0036
+ AA#ABQ#20150101#0900#00336#DFW column=delay:dep_delay, timestamp=2026-10-06T17:06:26.957, value=0000
+ AA#ABQ#20150101#0900#00336#DFW column=delay:late_aircraft_delay, timestamp=2026-10-06T17:06:26.957, value=0000
+ AA#ABQ#20150101#0900#00336#DFW column=delay:security_delay, timestamp=2026-10-06T17:06:26.957, value=0000
+ AA#ABQ#20150101#0900#00336#DFW column=delay:weather_delay, timestamp=2026-10-06T17:06:26.957, value=0000
+ AA#ABQ#20150101#0900#00336#DFW column=info:airline_name, timestamp=2026-10-06T17:06:26.957, value=American Airlines Inc.
+ AA#ABQ#20150101#0900#00336#DFW column=info:dest, timestamp=2026-10-06T17:06:26.957, value=DFW
+ AA#ABQ#20150101#0900#00336#DFW column=info:distance, timestamp=2026-10-06T17:06:26.957, value=569
+ AA#ABQ#20150101#0900#00336#DFW column=info:origin, timestamp=2026-10-06T17:06:26.957, value=ABQ
+ AA#ABQ#20150101#0900#00336#DFW column=info:sched_dep, timestamp=2026-10-06T17:06:26.957, value=0900
+ AA#ABQ#20150101#0900#00336#DFW column=info:tail_no, timestamp=2026-10-06T17:06:26.957, value=N479AA
+ AA#ABQ#20150101#1215#01662#DFW column=cancel:cancelled, timestamp=2026-10-06T17:06:28.105, value=1
+ AA#ABQ#20150101#1215#01662#DFW column=cancel:reason, timestamp=2026-10-06T17:06:28.105, value=B
+ AA#ABQ#20150101#1215#01662#DFW column=info:airline_name, timestamp=2026-10-06T17:06:28.105, value=American Airlines Inc.
+ AA#ABQ#20150101#1215#01662#DFW column=info:dest, timestamp=2026-10-06T17:06:28.105, value=DFW
+ AA#ABQ#20150101#1215#01662#DFW column=info:distance, timestamp=2026-10-06T17:06:28.105, value=569
+ AA#ABQ#20150101#1215#01662#DFW column=info:origin, timestamp=2026-10-06T17:06:28.105, value=ABQ
+ AA#ABQ#20150101#1215#01662#DFW column=info:sched_dep, timestamp=2026-10-06T17:06:28.105, value=1215
+ AA#ABQ#20150101#1215#01662#DFW column=info:tail_no, timestamp=2026-10-06T17:06:28.105, value=N4WJAA
+ AA#ABQ#20150101#1530#01024#DFW column=cancel:cancelled, timestamp=2026-10-06T17:06:28.811, value=0
+ AA#ABQ#20150101#1530#01024#DFW column=delay:arr_delay, timestamp=2026-10-06T17:06:28.811, value=0013
+ AA#ABQ#20150101#1530#01024#DFW column=delay:dep_delay, timestamp=2026-10-06T17:06:28.811, value=0014
+ AA#ABQ#20150101#1530#01024#DFW column=info:airline_name, timestamp=2026-10-06T17:06:28.811, value=American Airlines Inc.
+ AA#ABQ#20150101#1530#01024#DFW column=info:dest, timestamp=2026-10-06T17:06:28.811, value=DFW
+ AA#ABQ#20150101#1530#01024#DFW column=info:distance, timestamp=2026-10-06T17:06:28.811, value=569
+ AA#ABQ#20150101#1530#01024#DFW column=info:origin, timestamp=2026-10-06T17:06:28.811, value=ABQ
+ AA#ABQ#20150101#1530#01024#DFW column=info:sched_dep, timestamp=2026-10-06T17:06:28.811, value=1530
+ AA#ABQ#20150101#1530#01024#DFW column=info:tail_no, timestamp=2026-10-06T17:06:28.811, value=N505AA
+ AA#ABQ#20150102#0725#01184#DFW column=cancel:cancelled, timestamp=2026-10-06T17:06:29.862, value=0
+ AA#ABQ#20150102#0725#01184#DFW column=delay:air_system_delay, timestamp=2026-10-06T17:06:29.862, value=0018
+ AA#ABQ#20150102#0725#01184#DFW column=delay:airline_delay, timestamp=2026-10-06T17:06:29.862, value=0000
+ AA#ABQ#20150102#0725#01184#DFW column=delay:arr_delay, timestamp=2026-10-06T17:06:29.862, value=0018
+ AA#ABQ#20150102#0725#01184#DFW column=delay:dep_delay, timestamp=2026-10-06T17:06:29.862, value=0000
+ AA#ABQ#20150102#0725#01184#DFW column=delay:late_aircraft_delay, timestamp=2026-10-06T17:06:29.862, value=0000
+ AA#ABQ#20150102#0725#01184#DFW column=delay:security_delay, timestamp=2026-10-06T17:06:29.862, value=0000
+ AA#ABQ#20150102#0725#01184#DFW column=delay:weather_delay, timestamp=2026-10-06T17:06:29.862, value=0000
+ AA#ABQ#20150102#0725#01184#DFW column=info:airline_name, timestamp=2026-10-06T17:06:29.862, value=American Airlines Inc.
+ AA#ABQ#20150102#0725#01184#DFW column=info:dest, timestamp=2026-10-06T17:06:29.862, value=DFW
+ AA#ABQ#20150102#0725#01184#DFW column=info:distance, timestamp=2026-10-06T17:06:29.862, value=569
+ AA#ABQ#20150102#0725#01184#DFW column=info:origin, timestamp=2026-10-06T17:06:29.862, value=ABQ
+ AA#ABQ#20150102#0725#01184#DFW column=info:sched_dep, timestamp=2026-10-06T17:06:29.862, value=0725
+ AA#ABQ#20150102#0725#01184#DFW column=info:tail_no, timestamp=2026-10-06T17:06:29.862, value=N4XPAA
+5 row(s)
+Took 0.7917 seconds
+hbase:067:0> 
+hbase:001:0> 

@@ -1,0 +1,24 @@
+# 05_operations.hbase
+# Demonstrates GET, DELETE, and COUNT operations tied to aviation domain operations
+# Uses real record from full dataset: AS#ANC#20150101#0005#00098#SEA
+
+# 1. GET full row: Customer service agent auditing an individual flight journey
+get 'flights', 'AS#ANC#20150101#0005#00098#SEA'
+
+# 2. GET specific columns: Gate agent retrieving passenger-facing route & arrival status
+get 'flights', 'AS#ANC#20150101#0005#00098#SEA', {COLUMNS => ['info:airline_name', 'info:dest', 'delay:arr_delay']}
+
+# 3. DELETE single cell: Airline operations auditing team clearing an erroneous arrival delay value
+delete 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'delay:arr_delay'
+
+# 4. Verify cell deletion
+get 'flights', 'AS#ANC#20150101#0005#00098#SEA', {COLUMNS => ['delay:arr_delay']}
+
+# 5. Re-insert cell to restore data integrity
+put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'delay:arr_delay', '0000'
+
+# 6. Verify cell restoration
+get 'flights', 'AS#ANC#20150101#0005#00098#SEA', {COLUMNS => ['delay:arr_delay']}
+
+# 7. COUNT whole table with INTERVAL and CACHE
+count 'flights', INTERVAL => 500000, CACHE => 10000

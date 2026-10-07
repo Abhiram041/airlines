@@ -1,0 +1,172 @@
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by org.apache.hadoop.hbase.unsafe.HBasePlatformDependent (file:/mnt/c/Users/nanda/Downloads/airlines-delay-bda/java/target/flight-delay-hbase-1.0-SNAPSHOT.jar) to method java.nio.Bits.unaligned()
+WARNING: Please consider reporting this to the maintainers of org.apache.hadoop.hbase.unsafe.HBasePlatformDependent
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+==================================================================
+  FLIGHT DELAY INTELLIGENCE SYSTEM - APACHE HBASE JAVA CLIENT     
+  Course: 23CSE352 Big Data Analytics                             
+==================================================================
+log4j:WARN No appenders could be found for logger (org.apache.hadoop.util.Shell).
+log4j:WARN Please initialize the log4j system properly.
+log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
+[INFO] Connected successfully to Apache HBase Cluster.
+[INFO] Table flights already exists.
+[INFO] Table flights_by_airport already exists.
+[SUCCESS] Inserted sample real flight from CSV via Put API: AS#ANC#20150101#0005#00098#SEA
+[INFO] Starting bulk load from CSV: /root/data/flights_full.csv
+  Loaded 100,000 records... (6084.2 records/sec)
+  Loaded 200,000 records... (7938.4 records/sec)
+  Loaded 300,000 records... (8354.0 records/sec)
+  Loaded 400,000 records... (8059.5 records/sec)
+  Loaded 500,000 records... (7453.3 records/sec)
+  Loaded 600,000 records... (7252.9 records/sec)
+  Loaded 700,000 records... (7681.0 records/sec)
+  Loaded 800,000 records... (7455.3 records/sec)
+  Loaded 900,000 records... (7367.1 records/sec)
+  Loaded 1,000,000 records... (7243.1 records/sec)
+  Loaded 1,100,000 records... (7389.1 records/sec)
+  Loaded 1,200,000 records... (7516.8 records/sec)
+  Loaded 1,300,000 records... (7142.3 records/sec)
+  Loaded 1,400,000 records... (7189.7 records/sec)
+  Loaded 1,500,000 records... (7105.8 records/sec)
+  Loaded 1,600,000 records... (6986.1 records/sec)
+  Loaded 1,700,000 records... (7088.1 records/sec)
+  Loaded 1,800,000 records... (7092.3 records/sec)
+  Loaded 1,900,000 records... (6995.1 records/sec)
+  Loaded 2,000,000 records... (7150.7 records/sec)
+  Loaded 2,100,000 records... (7262.4 records/sec)
+  Loaded 2,200,000 records... (7345.2 records/sec)
+  Loaded 2,300,000 records... (7433.1 records/sec)
+  Loaded 2,400,000 records... (7504.9 records/sec)
+  Loaded 2,500,000 records... (7644.0 records/sec)
+  Loaded 2,600,000 records... (7706.8 records/sec)
+  Loaded 2,700,000 records... (7666.8 records/sec)
+  Loaded 2,800,000 records... (7650.1 records/sec)
+  Loaded 2,900,000 records... (7658.6 records/sec)
+  Loaded 3,000,000 records... (7729.8 records/sec)
+  Loaded 3,100,000 records... (7744.1 records/sec)
+  Loaded 3,200,000 records... (7780.7 records/sec)
+  Loaded 3,300,000 records... (7842.1 records/sec)
+  Loaded 3,400,000 records... (7910.1 records/sec)
+  Loaded 3,500,000 records... (7959.5 records/sec)
+  Loaded 3,600,000 records... (8020.2 records/sec)
+  Loaded 3,700,000 records... (7920.1 records/sec)
+  Loaded 3,800,000 records... (7955.1 records/sec)
+  Loaded 3,900,000 records... (8021.1 records/sec)
+  Loaded 4,000,000 records... (8086.3 records/sec)
+  Loaded 4,100,000 records... (8161.7 records/sec)
+  Loaded 4,200,000 records... (8236.7 records/sec)
+  Loaded 4,300,000 records... (8284.8 records/sec)
+  Loaded 4,400,000 records... (8299.8 records/sec)
+  Loaded 4,500,000 records... (8374.5 records/sec)
+  Loaded 4,600,000 records... (8298.5 records/sec)
+  Loaded 4,700,000 records... (8307.5 records/sec)
+  Loaded 4,800,000 records... (8277.0 records/sec)
+  Loaded 4,900,000 records... (8260.5 records/sec)
+  Loaded 5,000,000 records... (8292.0 records/sec)
+  Loaded 5,100,000 records... (8304.9 records/sec)
+  Loaded 5,200,000 records... (8328.7 records/sec)
+  Loaded 5,300,000 records... (8337.7 records/sec)
+  Loaded 5,400,000 records... (8345.4 records/sec)
+  Loaded 5,500,000 records... (8357.2 records/sec)
+  Loaded 5,600,000 records... (8391.4 records/sec)
+  Loaded 5,700,000 records... (8410.9 records/sec)
+  Loaded 5,800,000 records... (8403.9 records/sec)
+[SUCCESS] Bulk loaded 5,819,079 records into both tables in 693115 ms (8395.5 records/sec)
+
+=== OPERATION 1: GET SINGLE ROW (Direct Key Lookup) ===
+Query Target Row Key: AS#ANC#20150101#0005#00098#SEA
+  RowKey: AS#ANC#20150101#0005#00098#SEA
+    Airline: Alaska Airlines Inc.
+    Route:   ANC -> SEA
+    SchedDep:0005
+    ArrDelay:0000 min
+    Status:  OPERATED
+
+=== OPERATION 2: SCAN WITH FILTERLIST (PrefixFilter + SingleColumnValueFilter) ===
+Criteria: American Airlines ('AA#') AND Arrival Delay > 60 mins ('binary:0060')
+Result #1:
+  RowKey: AA#ABQ#20150102#1530#01024#DFW
+    Airline: American Airlines Inc.
+    Route:   ABQ -> DFW
+    SchedDep:1530
+    ArrDelay:0068 min
+    Status:  OPERATED
+Result #2:
+  RowKey: AA#ABQ#20150107#0724#01184#DFW
+    Airline: American Airlines Inc.
+    Route:   ABQ -> DFW
+    SchedDep:0724
+    ArrDelay:0525 min
+    Status:  OPERATED
+Result #3:
+  RowKey: AA#ABQ#20150113#0901#00336#DFW
+    Airline: American Airlines Inc.
+    Route:   ABQ -> DFW
+    SchedDep:0901
+    ArrDelay:0066 min
+    Status:  OPERATED
+Result #4:
+  RowKey: AA#ABQ#20150115#1215#01377#DFW
+    Airline: American Airlines Inc.
+    Route:   ABQ -> DFW
+    SchedDep:1215
+    ArrDelay:0066 min
+    Status:  OPERATED
+Result #5:
+  RowKey: AA#ABQ#20150129#0901#00336#DFW
+    Airline: American Airlines Inc.
+    Route:   ABQ -> DFW
+    SchedDep:0901
+    ArrDelay:0127 min
+    Status:  OPERATED
+Result #6:
+  RowKey: AA#ABQ#20150201#0724#01184#DFW
+    Airline: American Airlines Inc.
+    Route:   ABQ -> DFW
+    SchedDep:0724
+    ArrDelay:0139 min
+    Status:  OPERATED
+Result #7:
+  RowKey: AA#ABQ#20150201#1215#01377#DFW
+    Airline: American Airlines Inc.
+    Route:   ABQ -> DFW
+    SchedDep:1215
+    ArrDelay:0178 min
+    Status:  OPERATED
+Result #8:
+  RowKey: AA#ABQ#20150205#1535#01424#DFW
+    Airline: American Airlines Inc.
+    Route:   ABQ -> DFW
+    SchedDep:1535
+    ArrDelay:0074 min
+    Status:  OPERATED
+Result #9:
+  RowKey: AA#ABQ#20150206#1535#01424#DFW
+    Airline: American Airlines Inc.
+    Route:   ABQ -> DFW
+    SchedDep:1535
+    ArrDelay:0077 min
+    Status:  OPERATED
+Result #10:
+  RowKey: AA#ABQ#20150207#0901#00336#DFW
+    Airline: American Airlines Inc.
+    Route:   ABQ -> DFW
+    SchedDep:0901
+    ArrDelay:0117 min
+    Status:  OPERATED
+[SUMMARY] Scan matched 10 rows in 335 ms.
+
+=== OPERATION 3: ROW-KEY DESIGN TRADE-OFF COMPARISON ===
+Query: 'All flights departing ORD on 20150201' (1 warm-up run + 5 timed runs without LIMIT)
+
+Performance Benchmark Results (1 Warm-up Discarded + 5 Timed Runs):
+1. [Optimized Table] 'flights_by_airport' (Prefix Scan):
+   Runs: [188, 149, 81, 64, 65] ms | Min: 64 ms | Median: 81 ms | Max: 188 ms | Rows matched: 668
+2. [Unoptimized Table] 'flights' (Full Scan + Column/Row Filters):
+   Runs: [68890, 67706, 66242, 63728, 61934] ms | Min: 61934 ms | Median: 66242 ms | Max: 68890 ms | Rows matched: 668
+--> Measured Speedup Range: 329.44x to 1076.41x (Median: 817.80x faster, 81 ms vs 66242 ms).
+    Note: Results vary across test runs depending on OS cache state; the performance gap expands further as table volume grows.
+
+[INFO] All Java API operations completed successfully. Closing connection.

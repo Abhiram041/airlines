@@ -1,0 +1,68 @@
+hbase:001:0> # 05_operations.hbase
+hbase:002:0> # Demonstrates GET, DELETE, and COUNT operations tied to aviation domain operations
+hbase:003:0> # Uses real record from full dataset: AS#ANC#20150101#0005#00098#SEA
+hbase:004:0> 
+hbase:005:0> # 1. GET full row: Customer service agent auditing an individual flight journey
+hbase:006:0> get 'flights', 'AS#ANC#20150101#0005#00098#SEA'
+COLUMN  CELL
+ cancel:cancelled timestamp=2026-10-06T17:25:53.595, value=0
+ delay:arr_delay timestamp=2026-10-06T17:25:53.641, value=0000
+ delay:dep_delay timestamp=2026-10-06T17:25:53.613, value=0000
+ info:airline_name timestamp=2026-10-06T17:25:53.443, value=Alaska Airlines Inc.
+ info:dest timestamp=2026-10-06T17:25:53.495, value=SEA
+ info:distance timestamp=2026-10-06T17:25:53.571, value=1448
+ info:origin timestamp=2026-10-06T17:25:53.468, value=ANC
+ info:sched_dep timestamp=2026-10-06T17:25:53.532, value=0005
+ info:tail_no timestamp=2026-10-06T17:25:53.558, value=N407AS
+1 row(s)
+Took 0.8926 seconds
+hbase:007:0> 
+hbase:008:0> # 2. GET specific columns: Gate agent retrieving passenger-facing route & arrival status
+hbase:009:0> get 'flights', 'AS#ANC#20150101#0005#00098#SEA', {COLUMNS => ['info:airline_name', 'info:dest', 'delay:arr_delay']}
+COLUMN  CELL
+ delay:arr_delay timestamp=2026-10-06T17:25:53.641, value=0000
+ info:airline_name timestamp=2026-10-06T17:25:53.443, value=Alaska Airlines Inc.
+ info:dest timestamp=2026-10-06T17:25:53.495, value=SEA
+1 row(s)
+Took 0.0259 seconds
+hbase:010:0> 
+hbase:011:0> # 3. DELETE single cell: Airline operations auditing team clearing an erroneous arrival delay value
+hbase:012:0> delete 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'delay:arr_delay'
+Took 0.0831 seconds
+hbase:013:0> 
+hbase:014:0> # 4. Verify cell deletion
+hbase:015:0> get 'flights', 'AS#ANC#20150101#0005#00098#SEA', {COLUMNS => ['delay:arr_delay']}
+COLUMN  CELL
+ delay:arr_delay timestamp=2026-10-06T17:06:26.052, value=0000
+1 row(s)
+Took 0.0252 seconds
+hbase:016:0> 
+hbase:017:0> # 5. Re-insert cell to restore data integrity
+hbase:018:0> put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'delay:arr_delay', '0000'
+Took 0.0225 seconds
+hbase:019:0> 
+hbase:020:0> # 6. Verify cell restoration
+hbase:021:0> get 'flights', 'AS#ANC#20150101#0005#00098#SEA', {COLUMNS => ['delay:arr_delay']}
+COLUMN  CELL
+ delay:arr_delay timestamp=2026-10-07T07:07:40.621, value=0000
+1 row(s)
+Took 0.0120 seconds
+hbase:022:0> 
+hbase:023:0> # 7. COUNT whole table with INTERVAL and CACHE
+hbase:024:0> count 'flights', INTERVAL => 500000, CACHE => 10000
+Current count: 500000, row: AA#OGG#20150306#2300#00014#LAX
+Current count: 1000000, row: B6#HOU#20150126#1114#00282#JFK
+Current count: 1500000, row: DL#DCA#20150907#1100#02253#ATL
+Current count: 2000000, row: DL#SLC#20151012#1710#01208#CVG
+Current count: 2500000, row: EV#ORD#20150220#1315#05911#PIA
+Current count: 3000000, row: MQ#ORD#20150623#1205#03377#BUF
+Current count: 3500000, row: OO#MSP#20150807#1305#04449#ATW
+Current count: 4000000, row: UA#IAH#20150825#2110#01693#SNA
+Current count: 4500000, row: VX#DAL#20150428#1330#00710#LGA
+Current count: 5000000, row: WN#HOU#20150212#0815#03671#MAF
+Current count: 5500000, row: WN#PHX#20150316#1325#01095#AUS
+5819079 row(s)
+Took 63.1867 seconds
+=> 5819079
+hbase:025:0> 
+hbase:001:0> 

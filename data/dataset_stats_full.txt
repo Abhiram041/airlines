@@ -1,0 +1,47 @@
+==================================================================
+   FULL DATASET PREPROCESSING STATISTICS (5.8 MILLION FLIGHTS)    
+==================================================================
+
+1. TOTAL ROWS IN DATASET: 5,819,079
+   - Unique 'flights' Row Keys: 5,819,079 (Duplicates: 0)
+   - Unique 'flights_by_airport' Row Keys: 5,819,079 (Duplicates: 0)
+
+2. NUMBER OF AIRLINES: 14
+     - AA (American Airlines Inc.          ): 725,984 flights
+     - AS (Alaska Airlines Inc.            ): 172,521 flights
+     - B6 (JetBlue Airways                 ): 267,048 flights
+     - DL (Delta Air Lines Inc.            ): 875,881 flights
+     - EV (Atlantic Southeast Airlines     ): 571,977 flights
+     - F9 (Frontier Airlines Inc.          ): 90,836 flights
+     - HA (Hawaiian Airlines Inc.          ): 76,272 flights
+     - MQ (American Eagle Airlines Inc.    ): 294,632 flights
+     - NK (Spirit Air Lines                ): 117,379 flights
+     - OO (Skywest Airlines Inc.           ): 588,353 flights
+     - UA (United Air Lines Inc.           ): 515,723 flights
+     - US (US Airways Inc.                 ): 198,715 flights
+     - VX (Virgin America                  ): 61,903 flights
+     - WN (Southwest Airlines Co.          ): 1,261,855 flights
+
+3. FLIGHTS PER MONTH (All 12 Months Represented):
+     - Month  1: 469,968 flights
+     - Month  2: 429,191 flights
+     - Month  3: 504,312 flights
+     - Month  4: 485,151 flights
+     - Month  5: 496,993 flights
+     - Month  6: 503,897 flights
+     - Month  7: 520,718 flights
+     - Month  8: 510,536 flights
+     - Month  9: 464,946 flights
+     - Month 10: 486,165 flights
+     - Month 11: 467,972 flights
+     - Month 12: 479,230 flights
+
+4. CANCELLED FLIGHTS: 89,884 (1.54%)
+   CANCELLATION REASONS:
+     - Reason 'A': 25,262 flights
+     - Reason 'B': 48,851 flights
+     - Reason 'C': 15,749 flights
+     - Reason 'D': 22 flights
+
+5. OPERATED FLIGHTS WITH ARRIVAL DELAY > 60 MINS: 319,092 (5.57%)
+==================================================================

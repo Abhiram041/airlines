@@ -1,0 +1,58 @@
+hbase:001:0> # 01_create_tables.hbase
+hbase:002:0> # Creates tables 'flights' and 'flights_by_airport' with column families: info, delay, cancel
+hbase:003:0> 
+hbase:004:0> # 1. Disable and drop if already existing
+hbase:005:0> begin; disable 'flights'; drop 'flights'; rescue => e; end
+Took 6.1378 seconds
+Took 0.1484 seconds
+hbase:006:0> begin; disable 'flights_by_airport'; drop 'flights_by_airport'; rescue => e; end
+Took 0.3533 seconds
+Took 0.1312 seconds
+hbase:007:0> 
+hbase:008:0> # 2. Create tables
+hbase:009:0> create 'flights', 'info', 'delay', 'cancel'
+Created table flights
+Took 0.7300 seconds
+=> Hbase::Table - flights
+hbase:010:0> create 'flights_by_airport', 'info', 'delay', 'cancel'
+Created table flights_by_airport
+Took 0.6265 seconds
+=> Hbase::Table - flights_by_airport
+hbase:011:0> 
+hbase:012:0> # 3. List all tables to verify creation
+hbase:013:0> list
+TABLE
+flights
+flights_by_airport
+2 row(s)
+Took 0.0280 seconds
+=> ["flights", "flights_by_airport"]
+hbase:014:0> 
+hbase:015:0> # 4. Describe table schemas
+hbase:016:0> describe 'flights'
+Table flights is ENABLED
+flights, {TABLE_ATTRIBUTES => {METADATA => {'hbase.store.file-tracker.impl' => 'DEFAULT'}}}
+COLUMN FAMILIES DESCRIPTION
+{NAME => 'cancel', INDEX_BLOCK_ENCODING => 'NONE', VERSIONS => '1', KEEP_DELETED_CELLS => 'FALSE', DATA_BLOCK_ENCODING => 'NONE', TTL => 'FOREVER', MIN_VERSIONS => '0', REPLICATION_SCOPE => '0', BLOOMFILTER => 'ROW', IN_MEMORY => 'false', COMPRESSION => 'NONE', BLOCKCACHE => 'true', BLOCKSIZE => '65536 B (64KB)'}
+
+{NAME => 'delay', INDEX_BLOCK_ENCODING => 'NONE', VERSIONS => '1', KEEP_DELETED_CELLS => 'FALSE', DATA_BLOCK_ENCODING => 'NONE', TTL => 'FOREVER', MIN_VERSIONS => '0', REPLICATION_SCOPE => '0', BLOOMFILTER => 'ROW', IN_MEMORY => 'false', COMPRESSION => 'NONE', BLOCKCACHE => 'true', BLOCKSIZE => '65536 B (64KB)'}
+
+{NAME => 'info', INDEX_BLOCK_ENCODING => 'NONE', VERSIONS => '1', KEEP_DELETED_CELLS => 'FALSE', DATA_BLOCK_ENCODING => 'NONE', TTL => 'FOREVER', MIN_VERSIONS => '0', REPLICATION_SCOPE => '0', BLOOMFILTER => 'ROW', IN_MEMORY => 'false', COMPRESSION => 'NONE', BLOCKCACHE => 'true', BLOCKSIZE => '65536 B (64KB)'}
+
+3 row(s)
+Quota is disabled
+Took 0.0532 seconds
+hbase:017:0> describe 'flights_by_airport'
+Table flights_by_airport is ENABLED
+flights_by_airport, {TABLE_ATTRIBUTES => {METADATA => {'hbase.store.file-tracker.impl' => 'DEFAULT'}}}
+COLUMN FAMILIES DESCRIPTION
+{NAME => 'cancel', INDEX_BLOCK_ENCODING => 'NONE', VERSIONS => '1', KEEP_DELETED_CELLS => 'FALSE', DATA_BLOCK_ENCODING => 'NONE', TTL => 'FOREVER', MIN_VERSIONS => '0', REPLICATION_SCOPE => '0', BLOOMFILTER => 'ROW', IN_MEMORY => 'false', COMPRESSION => 'NONE', BLOCKCACHE => 'true', BLOCKSIZE => '65536 B (64KB)'}
+
+{NAME => 'delay', INDEX_BLOCK_ENCODING => 'NONE', VERSIONS => '1', KEEP_DELETED_CELLS => 'FALSE', DATA_BLOCK_ENCODING => 'NONE', TTL => 'FOREVER', MIN_VERSIONS => '0', REPLICATION_SCOPE => '0', BLOOMFILTER => 'ROW', IN_MEMORY => 'false', COMPRESSION => 'NONE', BLOCKCACHE => 'true', BLOCKSIZE => '65536 B (64KB)'}
+
+{NAME => 'info', INDEX_BLOCK_ENCODING => 'NONE', VERSIONS => '1', KEEP_DELETED_CELLS => 'FALSE', DATA_BLOCK_ENCODING => 'NONE', TTL => 'FOREVER', MIN_VERSIONS => '0', REPLICATION_SCOPE => '0', BLOOMFILTER => 'ROW', IN_MEMORY => 'false', COMPRESSION => 'NONE', BLOCKCACHE => 'true', BLOCKSIZE => '65536 B (64KB)'}
+
+3 row(s)
+Quota is disabled
+Took 0.0450 seconds
+hbase:018:0> 

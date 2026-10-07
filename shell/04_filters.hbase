@@ -1,0 +1,35 @@
+# 04_filters.hbase
+# Demonstrates 5 distinct HBase filters + Combined AND/OR filters + Date-Range Scan
+# All SingleColumnValueFilters on sparse columns set filterIfMissing=true (true, true)
+
+# Filter 1: PrefixFilter
+# Real-World Question: "Find all flights operated by American Airlines (AA) to evaluate fleet schedule performance."
+scan 'flights', {FILTER => "PrefixFilter('AA#')", LIMIT => 3}
+
+# Filter 2: SingleColumnValueFilter (> 60 mins arrival delay, filterIfMissing=true)
+# Real-World Question: "Identify flights with severe arrival delays (>1 hour) for operational audits."
+scan 'flights', {FILTER => "SingleColumnValueFilter('delay', 'arr_delay', >, 'binary:0060', true, true)", LIMIT => 3}
+
+# Filter 3: SingleColumnValueFilter (Cancelled flights, filterIfMissing=true)
+# Real-World Question: "Retrieve all cancelled flights to analyze dispatch reliability."
+scan 'flights', {FILTER => "SingleColumnValueFilter('cancel', 'cancelled', =, 'binary:1', true, true)", LIMIT => 3}
+
+# Filter 4: ValueFilter (Reason 'B' for weather)
+# Real-World Question: "Isolate flights cancelled specifically due to severe weather events (Reason 'B')."
+scan 'flights', {FILTER => "ValueFilter(=, 'binary:B')", LIMIT => 3}
+
+# Filter 5: ColumnPrefixFilter ('arr')
+# Real-World Question: "Inspect only arrival metrics ('arr_') across flights to streamline passenger arrival displays."
+scan 'flights', {FILTER => "ColumnPrefixFilter('arr')", LIMIT => 3}
+
+# Combined Filter 1 (Logical AND): AA flights AND Arrival Delay > 60 minutes
+# Real-World Question: "Which American Airlines flights suffered severe delays over 60 minutes?"
+scan 'flights', {FILTER => "(PrefixFilter('AA#')) AND (SingleColumnValueFilter('delay', 'arr_delay', >, 'binary:0060', true, true))", LIMIT => 3}
+
+# Combined Filter 2 (Logical OR): Cancelled due to Carrier (A) OR Weather (B)
+# Real-World Question: "Find flights cancelled due to airline operational failure or severe weather conditions."
+scan 'flights', {FILTER => "(SingleColumnValueFilter('cancel', 'reason', =, 'binary:A', true, true)) OR (SingleColumnValueFilter('cancel', 'reason', =, 'binary:B', true, true))", LIMIT => 3}
+
+# Date-Range Scan using STARTROW and STOPROW
+# Real-World Question: "Analyze flights departing from DFW on airline AA during the New Year travel window (Jan 1 - Jan 5, 2015)."
+scan 'flights', {STARTROW => 'AA#DFW#20150101', STOPROW => 'AA#DFW#20150106', LIMIT => 5}

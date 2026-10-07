@@ -1,0 +1,223 @@
+# 20 Sample HBase Shell PUT commands from Full 5.8M Dataset
+# Table: flights
+
+# Flight Record: AS#ANC#20150101#0005#00098#SEA
+put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'info:airline_name', 'Alaska Airlines Inc.'
+put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'info:origin', 'ANC'
+put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'info:dest', 'SEA'
+put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'info:sched_dep', '0005'
+put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'info:tail_no', 'N407AS'
+put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'info:distance', '1448'
+put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'cancel:cancelled', '0'
+put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'delay:dep_delay', '0000'
+put 'flights', 'AS#ANC#20150101#0005#00098#SEA', 'delay:arr_delay', '0000'
+
+# Flight Record: AA#LAX#20150101#0010#02336#PBI
+put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:airline_name', 'American Airlines Inc.'
+put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:origin', 'LAX'
+put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:dest', 'PBI'
+put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:sched_dep', '0010'
+put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:tail_no', 'N3KUAA'
+put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:distance', '2330'
+put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'cancel:cancelled', '0'
+put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'delay:dep_delay', '0000'
+put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'delay:arr_delay', '0000'
+
+# Flight Record: US#SFO#20150101#0020#00840#CLT
+put 'flights', 'US#SFO#20150101#0020#00840#CLT', 'info:airline_name', 'US Airways Inc.'
+put 'flights', 'US#SFO#20150101#0020#00840#CLT', 'info:origin', 'SFO'
+put 'flights', 'US#SFO#20150101#0020#00840#CLT', 'info:dest', 'CLT'
+put 'flights', 'US#SFO#20150101#0020#00840#CLT', 'info:sched_dep', '0020'
+put 'flights', 'US#SFO#20150101#0020#00840#CLT', 'info:tail_no', 'N171US'
+put 'flights', 'US#SFO#20150101#0020#00840#CLT', 'info:distance', '2296'
+put 'flights', 'US#SFO#20150101#0020#00840#CLT', 'cancel:cancelled', '0'
+put 'flights', 'US#SFO#20150101#0020#00840#CLT', 'delay:dep_delay', '0000'
+put 'flights', 'US#SFO#20150101#0020#00840#CLT', 'delay:arr_delay', '0005'
+
+# Flight Record: AA#LAX#20150101#0020#00258#MIA
+put 'flights', 'AA#LAX#20150101#0020#00258#MIA', 'info:airline_name', 'American Airlines Inc.'
+put 'flights', 'AA#LAX#20150101#0020#00258#MIA', 'info:origin', 'LAX'
+put 'flights', 'AA#LAX#20150101#0020#00258#MIA', 'info:dest', 'MIA'
+put 'flights', 'AA#LAX#20150101#0020#00258#MIA', 'info:sched_dep', '0020'
+put 'flights', 'AA#LAX#20150101#0020#00258#MIA', 'info:tail_no', 'N3HYAA'
+put 'flights', 'AA#LAX#20150101#0020#00258#MIA', 'info:distance', '2342'
+put 'flights', 'AA#LAX#20150101#0020#00258#MIA', 'cancel:cancelled', '0'
+put 'flights', 'AA#LAX#20150101#0020#00258#MIA', 'delay:dep_delay', '0000'
+put 'flights', 'AA#LAX#20150101#0020#00258#MIA', 'delay:arr_delay', '0000'
+
+# Flight Record: AS#SEA#20150101#0025#00135#ANC
+put 'flights', 'AS#SEA#20150101#0025#00135#ANC', 'info:airline_name', 'Alaska Airlines Inc.'
+put 'flights', 'AS#SEA#20150101#0025#00135#ANC', 'info:origin', 'SEA'
+put 'flights', 'AS#SEA#20150101#0025#00135#ANC', 'info:dest', 'ANC'
+put 'flights', 'AS#SEA#20150101#0025#00135#ANC', 'info:sched_dep', '0025'
+put 'flights', 'AS#SEA#20150101#0025#00135#ANC', 'info:tail_no', 'N527AS'
+put 'flights', 'AS#SEA#20150101#0025#00135#ANC', 'info:distance', '1448'
+put 'flights', 'AS#SEA#20150101#0025#00135#ANC', 'cancel:cancelled', '0'
+put 'flights', 'AS#SEA#20150101#0025#00135#ANC', 'delay:dep_delay', '0000'
+put 'flights', 'AS#SEA#20150101#0025#00135#ANC', 'delay:arr_delay', '0000'
+
+# Flight Record: DL#SFO#20150101#0025#00806#MSP
+put 'flights', 'DL#SFO#20150101#0025#00806#MSP', 'info:airline_name', 'Delta Air Lines Inc.'
+put 'flights', 'DL#SFO#20150101#0025#00806#MSP', 'info:origin', 'SFO'
+put 'flights', 'DL#SFO#20150101#0025#00806#MSP', 'info:dest', 'MSP'
+put 'flights', 'DL#SFO#20150101#0025#00806#MSP', 'info:sched_dep', '0025'
+put 'flights', 'DL#SFO#20150101#0025#00806#MSP', 'info:tail_no', 'N3730B'
+put 'flights', 'DL#SFO#20150101#0025#00806#MSP', 'info:distance', '1589'
+put 'flights', 'DL#SFO#20150101#0025#00806#MSP', 'cancel:cancelled', '0'
+put 'flights', 'DL#SFO#20150101#0025#00806#MSP', 'delay:dep_delay', '0000'
+put 'flights', 'DL#SFO#20150101#0025#00806#MSP', 'delay:arr_delay', '0008'
+
+# Flight Record: NK#LAS#20150101#0025#00612#MSP
+put 'flights', 'NK#LAS#20150101#0025#00612#MSP', 'info:airline_name', 'Spirit Air Lines'
+put 'flights', 'NK#LAS#20150101#0025#00612#MSP', 'info:origin', 'LAS'
+put 'flights', 'NK#LAS#20150101#0025#00612#MSP', 'info:dest', 'MSP'
+put 'flights', 'NK#LAS#20150101#0025#00612#MSP', 'info:sched_dep', '0025'
+put 'flights', 'NK#LAS#20150101#0025#00612#MSP', 'info:tail_no', 'N635NK'
+put 'flights', 'NK#LAS#20150101#0025#00612#MSP', 'info:distance', '1299'
+put 'flights', 'NK#LAS#20150101#0025#00612#MSP', 'cancel:cancelled', '0'
+put 'flights', 'NK#LAS#20150101#0025#00612#MSP', 'delay:dep_delay', '0000'
+put 'flights', 'NK#LAS#20150101#0025#00612#MSP', 'delay:arr_delay', '0000'
+
+# Flight Record: US#LAX#20150101#0030#02013#CLT
+put 'flights', 'US#LAX#20150101#0030#02013#CLT', 'info:airline_name', 'US Airways Inc.'
+put 'flights', 'US#LAX#20150101#0030#02013#CLT', 'info:origin', 'LAX'
+put 'flights', 'US#LAX#20150101#0030#02013#CLT', 'info:dest', 'CLT'
+put 'flights', 'US#LAX#20150101#0030#02013#CLT', 'info:sched_dep', '0030'
+put 'flights', 'US#LAX#20150101#0030#02013#CLT', 'info:tail_no', 'N584UW'
+put 'flights', 'US#LAX#20150101#0030#02013#CLT', 'info:distance', '2125'
+put 'flights', 'US#LAX#20150101#0030#02013#CLT', 'cancel:cancelled', '0'
+put 'flights', 'US#LAX#20150101#0030#02013#CLT', 'delay:dep_delay', '0014'
+put 'flights', 'US#LAX#20150101#0030#02013#CLT', 'delay:arr_delay', '0000'
+
+# Flight Record: AA#SFO#20150101#0030#01112#DFW
+put 'flights', 'AA#SFO#20150101#0030#01112#DFW', 'info:airline_name', 'American Airlines Inc.'
+put 'flights', 'AA#SFO#20150101#0030#01112#DFW', 'info:origin', 'SFO'
+put 'flights', 'AA#SFO#20150101#0030#01112#DFW', 'info:dest', 'DFW'
+put 'flights', 'AA#SFO#20150101#0030#01112#DFW', 'info:sched_dep', '0030'
+put 'flights', 'AA#SFO#20150101#0030#01112#DFW', 'info:tail_no', 'N3LAAA'
+put 'flights', 'AA#SFO#20150101#0030#01112#DFW', 'info:distance', '1464'
+put 'flights', 'AA#SFO#20150101#0030#01112#DFW', 'cancel:cancelled', '0'
+put 'flights', 'AA#SFO#20150101#0030#01112#DFW', 'delay:dep_delay', '0000'
+put 'flights', 'AA#SFO#20150101#0030#01112#DFW', 'delay:arr_delay', '0000'
+
+# Flight Record: DL#LAS#20150101#0030#01173#ATL
+put 'flights', 'DL#LAS#20150101#0030#01173#ATL', 'info:airline_name', 'Delta Air Lines Inc.'
+put 'flights', 'DL#LAS#20150101#0030#01173#ATL', 'info:origin', 'LAS'
+put 'flights', 'DL#LAS#20150101#0030#01173#ATL', 'info:dest', 'ATL'
+put 'flights', 'DL#LAS#20150101#0030#01173#ATL', 'info:sched_dep', '0030'
+put 'flights', 'DL#LAS#20150101#0030#01173#ATL', 'info:tail_no', 'N826DN'
+put 'flights', 'DL#LAS#20150101#0030#01173#ATL', 'info:distance', '1747'
+put 'flights', 'DL#LAS#20150101#0030#01173#ATL', 'cancel:cancelled', '0'
+put 'flights', 'DL#LAS#20150101#0030#01173#ATL', 'delay:dep_delay', '0003'
+put 'flights', 'DL#LAS#20150101#0030#01173#ATL', 'delay:arr_delay', '0000'
+
+# Flight Record: DL#DEN#20150101#0030#02336#ATL
+put 'flights', 'DL#DEN#20150101#0030#02336#ATL', 'info:airline_name', 'Delta Air Lines Inc.'
+put 'flights', 'DL#DEN#20150101#0030#02336#ATL', 'info:origin', 'DEN'
+put 'flights', 'DL#DEN#20150101#0030#02336#ATL', 'info:dest', 'ATL'
+put 'flights', 'DL#DEN#20150101#0030#02336#ATL', 'info:sched_dep', '0030'
+put 'flights', 'DL#DEN#20150101#0030#02336#ATL', 'info:tail_no', 'N958DN'
+put 'flights', 'DL#DEN#20150101#0030#02336#ATL', 'info:distance', '1199'
+put 'flights', 'DL#DEN#20150101#0030#02336#ATL', 'cancel:cancelled', '0'
+put 'flights', 'DL#DEN#20150101#0030#02336#ATL', 'delay:dep_delay', '0000'
+put 'flights', 'DL#DEN#20150101#0030#02336#ATL', 'delay:arr_delay', '0000'
+
+# Flight Record: AA#LAS#20150101#0035#01674#MIA
+put 'flights', 'AA#LAS#20150101#0035#01674#MIA', 'info:airline_name', 'American Airlines Inc.'
+put 'flights', 'AA#LAS#20150101#0035#01674#MIA', 'info:origin', 'LAS'
+put 'flights', 'AA#LAS#20150101#0035#01674#MIA', 'info:dest', 'MIA'
+put 'flights', 'AA#LAS#20150101#0035#01674#MIA', 'info:sched_dep', '0035'
+put 'flights', 'AA#LAS#20150101#0035#01674#MIA', 'info:tail_no', 'N853AA'
+put 'flights', 'AA#LAS#20150101#0035#01674#MIA', 'info:distance', '2174'
+put 'flights', 'AA#LAS#20150101#0035#01674#MIA', 'cancel:cancelled', '0'
+put 'flights', 'AA#LAS#20150101#0035#01674#MIA', 'delay:dep_delay', '0000'
+put 'flights', 'AA#LAS#20150101#0035#01674#MIA', 'delay:arr_delay', '0000'
+
+# Flight Record: DL#LAX#20150101#0035#01434#MSP
+put 'flights', 'DL#LAX#20150101#0035#01434#MSP', 'info:airline_name', 'Delta Air Lines Inc.'
+put 'flights', 'DL#LAX#20150101#0035#01434#MSP', 'info:origin', 'LAX'
+put 'flights', 'DL#LAX#20150101#0035#01434#MSP', 'info:dest', 'MSP'
+put 'flights', 'DL#LAX#20150101#0035#01434#MSP', 'info:sched_dep', '0035'
+put 'flights', 'DL#LAX#20150101#0035#01434#MSP', 'info:tail_no', 'N547US'
+put 'flights', 'DL#LAX#20150101#0035#01434#MSP', 'info:distance', '1535'
+put 'flights', 'DL#LAX#20150101#0035#01434#MSP', 'cancel:cancelled', '0'
+put 'flights', 'DL#LAX#20150101#0035#01434#MSP', 'delay:dep_delay', '0000'
+put 'flights', 'DL#LAX#20150101#0035#01434#MSP', 'delay:arr_delay', '0000'
+
+# Flight Record: DL#SLC#20150101#0040#02324#ATL
+put 'flights', 'DL#SLC#20150101#0040#02324#ATL', 'info:airline_name', 'Delta Air Lines Inc.'
+put 'flights', 'DL#SLC#20150101#0040#02324#ATL', 'info:origin', 'SLC'
+put 'flights', 'DL#SLC#20150101#0040#02324#ATL', 'info:dest', 'ATL'
+put 'flights', 'DL#SLC#20150101#0040#02324#ATL', 'info:sched_dep', '0040'
+put 'flights', 'DL#SLC#20150101#0040#02324#ATL', 'info:tail_no', 'N3751B'
+put 'flights', 'DL#SLC#20150101#0040#02324#ATL', 'info:distance', '1590'
+put 'flights', 'DL#SLC#20150101#0040#02324#ATL', 'cancel:cancelled', '0'
+put 'flights', 'DL#SLC#20150101#0040#02324#ATL', 'delay:dep_delay', '0000'
+put 'flights', 'DL#SLC#20150101#0040#02324#ATL', 'delay:arr_delay', '0000'
+
+# Flight Record: DL#SEA#20150101#0040#02440#MSP
+put 'flights', 'DL#SEA#20150101#0040#02440#MSP', 'info:airline_name', 'Delta Air Lines Inc.'
+put 'flights', 'DL#SEA#20150101#0040#02440#MSP', 'info:origin', 'SEA'
+put 'flights', 'DL#SEA#20150101#0040#02440#MSP', 'info:dest', 'MSP'
+put 'flights', 'DL#SEA#20150101#0040#02440#MSP', 'info:sched_dep', '0040'
+put 'flights', 'DL#SEA#20150101#0040#02440#MSP', 'info:tail_no', 'N651DL'
+put 'flights', 'DL#SEA#20150101#0040#02440#MSP', 'info:distance', '1399'
+put 'flights', 'DL#SEA#20150101#0040#02440#MSP', 'cancel:cancelled', '0'
+put 'flights', 'DL#SEA#20150101#0040#02440#MSP', 'delay:dep_delay', '0000'
+put 'flights', 'DL#SEA#20150101#0040#02440#MSP', 'delay:arr_delay', '0008'
+
+# Flight Record: AS#ANC#20150101#0045#00108#SEA
+put 'flights', 'AS#ANC#20150101#0045#00108#SEA', 'info:airline_name', 'Alaska Airlines Inc.'
+put 'flights', 'AS#ANC#20150101#0045#00108#SEA', 'info:origin', 'ANC'
+put 'flights', 'AS#ANC#20150101#0045#00108#SEA', 'info:dest', 'SEA'
+put 'flights', 'AS#ANC#20150101#0045#00108#SEA', 'info:sched_dep', '0045'
+put 'flights', 'AS#ANC#20150101#0045#00108#SEA', 'info:tail_no', 'N309AS'
+put 'flights', 'AS#ANC#20150101#0045#00108#SEA', 'info:distance', '1448'
+put 'flights', 'AS#ANC#20150101#0045#00108#SEA', 'cancel:cancelled', '0'
+put 'flights', 'AS#ANC#20150101#0045#00108#SEA', 'delay:dep_delay', '0000'
+put 'flights', 'AS#ANC#20150101#0045#00108#SEA', 'delay:arr_delay', '0000'
+
+# Flight Record: DL#ANC#20150101#0045#01560#SEA
+put 'flights', 'DL#ANC#20150101#0045#01560#SEA', 'info:airline_name', 'Delta Air Lines Inc.'
+put 'flights', 'DL#ANC#20150101#0045#01560#SEA', 'info:origin', 'ANC'
+put 'flights', 'DL#ANC#20150101#0045#01560#SEA', 'info:dest', 'SEA'
+put 'flights', 'DL#ANC#20150101#0045#01560#SEA', 'info:sched_dep', '0045'
+put 'flights', 'DL#ANC#20150101#0045#01560#SEA', 'info:tail_no', 'N3743H'
+put 'flights', 'DL#ANC#20150101#0045#01560#SEA', 'info:distance', '1448'
+put 'flights', 'DL#ANC#20150101#0045#01560#SEA', 'cancel:cancelled', '0'
+put 'flights', 'DL#ANC#20150101#0045#01560#SEA', 'delay:dep_delay', '0000'
+put 'flights', 'DL#ANC#20150101#0045#01560#SEA', 'delay:arr_delay', '0000'
+
+# Flight Record: UA#SFO#20150101#0048#01197#IAH
+put 'flights', 'UA#SFO#20150101#0048#01197#IAH', 'info:airline_name', 'United Air Lines Inc.'
+put 'flights', 'UA#SFO#20150101#0048#01197#IAH', 'info:origin', 'SFO'
+put 'flights', 'UA#SFO#20150101#0048#01197#IAH', 'info:dest', 'IAH'
+put 'flights', 'UA#SFO#20150101#0048#01197#IAH', 'info:sched_dep', '0048'
+put 'flights', 'UA#SFO#20150101#0048#01197#IAH', 'info:tail_no', 'N78448'
+put 'flights', 'UA#SFO#20150101#0048#01197#IAH', 'info:distance', '1635'
+put 'flights', 'UA#SFO#20150101#0048#01197#IAH', 'cancel:cancelled', '0'
+put 'flights', 'UA#SFO#20150101#0048#01197#IAH', 'delay:dep_delay', '0000'
+put 'flights', 'UA#SFO#20150101#0048#01197#IAH', 'delay:arr_delay', '0000'
+
+# Flight Record: AS#ANC#20150101#0050#00122#PDX
+put 'flights', 'AS#ANC#20150101#0050#00122#PDX', 'info:airline_name', 'Alaska Airlines Inc.'
+put 'flights', 'AS#ANC#20150101#0050#00122#PDX', 'info:origin', 'ANC'
+put 'flights', 'AS#ANC#20150101#0050#00122#PDX', 'info:dest', 'PDX'
+put 'flights', 'AS#ANC#20150101#0050#00122#PDX', 'info:sched_dep', '0050'
+put 'flights', 'AS#ANC#20150101#0050#00122#PDX', 'info:tail_no', 'N413AS'
+put 'flights', 'AS#ANC#20150101#0050#00122#PDX', 'info:distance', '1542'
+put 'flights', 'AS#ANC#20150101#0050#00122#PDX', 'cancel:cancelled', '0'
+put 'flights', 'AS#ANC#20150101#0050#00122#PDX', 'delay:dep_delay', '0000'
+put 'flights', 'AS#ANC#20150101#0050#00122#PDX', 'delay:arr_delay', '0000'
+
+# Flight Record: DL#PDX#20150101#0050#01670#MSP
+put 'flights', 'DL#PDX#20150101#0050#01670#MSP', 'info:airline_name', 'Delta Air Lines Inc.'
+put 'flights', 'DL#PDX#20150101#0050#01670#MSP', 'info:origin', 'PDX'
+put 'flights', 'DL#PDX#20150101#0050#01670#MSP', 'info:dest', 'MSP'
+put 'flights', 'DL#PDX#20150101#0050#01670#MSP', 'info:sched_dep', '0050'
+put 'flights', 'DL#PDX#20150101#0050#01670#MSP', 'info:tail_no', 'N806DN'
+put 'flights', 'DL#PDX#20150101#0050#01670#MSP', 'info:distance', '1426'
+put 'flights', 'DL#PDX#20150101#0050#01670#MSP', 'cancel:cancelled', '0'
+put 'flights', 'DL#PDX#20150101#0050#01670#MSP', 'delay:dep_delay', '0000'
+put 'flights', 'DL#PDX#20150101#0050#01670#MSP', 'delay:arr_delay', '0000'
+

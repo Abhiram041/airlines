@@ -1,0 +1,41 @@
+hbase:001:0> # 03_verify_count.hbase
+hbase:002:0> # Verify total row count of both tables after bulk loading
+hbase:003:0> # Using INTERVAL => 5000 and CACHE => 1000 for efficient server-side batching
+hbase:004:0> 
+hbase:005:0> puts "Verifying row count in 'flights' table:"
+Verifying row count in 'flights' table:
+hbase:006:0> count 'flights', INTERVAL => 500000, CACHE => 10000
+Current count: 500000, row: AA#OGG#20150306#2300#00014#LAX
+Current count: 1000000, row: B6#HOU#20150126#1114#00282#JFK
+Current count: 1500000, row: DL#DCA#20150907#1100#02253#ATL
+Current count: 2000000, row: DL#SLC#20151012#1710#01208#CVG
+Current count: 2500000, row: EV#ORD#20150220#1315#05911#PIA
+Current count: 3000000, row: MQ#ORD#20150623#1205#03377#BUF
+Current count: 3500000, row: OO#MSP#20150807#1305#04449#ATW
+Current count: 4000000, row: UA#IAH#20150825#2110#01693#SNA
+Current count: 4500000, row: VX#DAL#20150428#1330#00710#LGA
+Current count: 5000000, row: WN#HOU#20150212#0815#03671#MAF
+Current count: 5500000, row: WN#PHX#20150316#1325#01095#AUS
+5819079 row(s)
+Took 41.9685 seconds
+=> 5819079
+hbase:007:0> 
+hbase:008:0> puts "Verifying row count in 'flights_by_airport' table:"
+Verifying row count in 'flights_by_airport' table:
+hbase:009:0> count 'flights_by_airport', INTERVAL => 500000, CACHE => 10000
+Current count: 500000, row: AUS#20151118#0659#UA#01966#IAH
+Current count: 1000000, row: CLT#20150222#1810#US#00609#SEA
+Current count: 1500000, row: DEN#20151022#1618#AA#00375#DFW
+Current count: 2000000, row: EWR#20150417#2011#UA#00667#PBI
+Current count: 2500000, row: IAH#20150607#1200#UA#01558#EWR
+Current count: 3000000, row: LAX#20150330#1850#DL#02643#LAS
+Current count: 3500000, row: MCO#20151222#1735#WN#01796#RDU
+Current count: 4000000, row: OGG#20150523#2028#HA#00195#HNL
+Current count: 4500000, row: PHL#20150516#1340#AA#00228#DFW
+Current count: 5000000, row: SAT#20151018#1600#OO#05206#SFO
+Current count: 5500000, row: SLC#20151027#0600#OO#04442#SEA
+5819079 row(s)
+Took 42.0416 seconds
+=> 5819079
+hbase:010:0> 
+hbase:001:0> 

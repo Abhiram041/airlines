@@ -1,0 +1,30 @@
+# 05b_deleteall.hbase
+# Demonstrates DELETEALL on a real record from full dataset: AA#LAX#20150101#0010#02336#PBI
+# Verifies count decreases to 5819078, then restores all cells and verifies count returns to 5819079.
+
+puts "=== STEP 1: GET ROW BEFORE DELETEALL ==="
+get 'flights', 'AA#LAX#20150101#0010#02336#PBI'
+
+puts "=== STEP 2: EXECUTE DELETEALL ON ENTIRE ROW ==="
+deleteall 'flights', 'AA#LAX#20150101#0010#02336#PBI'
+
+puts "=== STEP 3: VERIFY ROW DELETION (EXPECT 0 ROWS) ==="
+get 'flights', 'AA#LAX#20150101#0010#02336#PBI'
+
+puts "=== STEP 4: VERIFY TABLE COUNT (EXPECT 5819078) ==="
+count 'flights', INTERVAL => 500000, CACHE => 10000
+
+puts "=== STEP 5: RESTORE ALL CELLS FROM DATASET ==="
+put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:airline_name', 'American Airlines Inc.'
+put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:origin', 'LAX'
+put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:dest', 'PBI'
+put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:sched_dep', '0010'
+put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:tail_no', 'N3KUAA'
+put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:distance', '2330'
+put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'cancel:cancelled', '0'
+put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'delay:dep_delay', '0000'
+put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'delay:arr_delay', '0000'
+
+puts "=== STEP 6: VERIFY RESTORED ROW AND FINAL COUNT (EXPECT 5819079) ==="
+get 'flights', 'AA#LAX#20150101#0010#02336#PBI'
+count 'flights', INTERVAL => 500000, CACHE => 10000

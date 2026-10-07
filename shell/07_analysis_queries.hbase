@@ -1,0 +1,31 @@
+# 07_analysis_queries.hbase
+# 8 Comprehensive Aviation Business Intelligence Queries
+# All SingleColumnValueFilters on sparse columns use filterIfMissing=true (true, true)
+
+puts "=== ANALYSIS QUERY 1: Severe Airline Delays (AA Flights Delayed > 60 Mins) ==="
+scan 'flights', {FILTER => "(PrefixFilter('AA#')) AND (SingleColumnValueFilter('delay', 'arr_delay', >, 'binary:0060', true, true))", LIMIT => 5}
+
+puts "=== ANALYSIS QUERY 2: Weather Disruption Analysis (Cancellations with Reason 'B') ==="
+scan 'flights', {FILTER => "(SingleColumnValueFilter('cancel', 'cancelled', =, 'binary:1', true, true)) AND (SingleColumnValueFilter('cancel', 'reason', =, 'binary:B', true, true))", LIMIT => 5}
+
+puts "=== ANALYSIS QUERY 3: Internal Airline Fault Audit (Airline Delay > 45 Mins) ==="
+scan 'flights', {FILTER => "SingleColumnValueFilter('delay', 'airline_delay', >, 'binary:0045', true, true)", LIMIT => 5, COLUMNS => ['info:airline_name', 'info:origin', 'info:dest', 'delay:airline_delay']}
+
+puts "=== ANALYSIS QUERY 4: Cascading Network Delay Impact (Late Aircraft Delay > 60 Mins) ==="
+scan 'flights', {FILTER => "SingleColumnValueFilter('delay', 'late_aircraft_delay', >, 'binary:0060', true, true)", LIMIT => 5, COLUMNS => ['info:airline_name', 'info:origin', 'info:dest', 'delay:late_aircraft_delay']}
+
+puts "=== ANALYSIS QUERY 5: Holiday Rush Date-Bounded Scan (DFW Departures Jan 1 to Jan 4) ==="
+scan 'flights', {STARTROW => 'AA#DFW#20150101', STOPROW => 'AA#DFW#20150105', LIMIT => 5}
+
+puts "=== ANALYSIS QUERY 6: Non-Weather Cancellations (Carrier 'A' or NAS System 'C') ==="
+scan 'flights', {FILTER => "(SingleColumnValueFilter('cancel', 'cancelled', =, 'binary:1', true, true)) AND ((SingleColumnValueFilter('cancel', 'reason', =, 'binary:A', true, true)) OR (SingleColumnValueFilter('cancel', 'reason', =, 'binary:C', true, true)))", LIMIT => 5}
+
+puts "=== ANALYSIS QUERY 7: Airport Outbound Congestion (ORD Flights on Feb 1 via flights_by_airport) ==="
+scan 'flights_by_airport', {FILTER => "PrefixFilter('ORD#20150201#')", LIMIT => 5}
+
+puts "=== ANALYSIS QUERY 8: Architecture Trade-Off Benchmark (Airport Query on Dual Schemas) ==="
+puts "8A. Optimized Table 'flights_by_airport' using PrefixFilter on Key Prefix 'ORD#20150201#':"
+scan 'flights_by_airport', {FILTER => "PrefixFilter('ORD#20150201#')", LIMIT => 10}
+
+puts "8B. Unoptimized Table 'flights' using Column Filter on Non-Prefix Attribute 'info:origin':"
+scan 'flights', {FILTER => "(SingleColumnValueFilter('info', 'origin', =, 'binary:ORD', true, true)) AND (RowFilter(=, 'regexstring:.*#ORD#20150201#.*'))", LIMIT => 10}

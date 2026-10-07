@@ -1,0 +1,103 @@
+hbase:001:0> # 05b_deleteall.hbase
+hbase:002:0> # Demonstrates DELETEALL on a real record from full dataset: AA#LAX#20150101#0010#02336#PBI
+hbase:003:0> # Verifies count decreases to 5819078, then restores all cells and verifies count returns to 5819079.
+hbase:004:0> 
+hbase:005:0> puts "=== STEP 1: GET ROW BEFORE DELETEALL ==="
+=== STEP 1: GET ROW BEFORE DELETEALL ===
+hbase:006:0> get 'flights', 'AA#LAX#20150101#0010#02336#PBI'
+COLUMN  CELL
+ cancel:cancelled timestamp=2026-10-06T17:25:54.171, value=0
+ delay:arr_delay timestamp=2026-10-06T17:25:54.307, value=0000
+ delay:dep_delay timestamp=2026-10-06T17:25:54.266, value=0000
+ info:airline_name timestamp=2026-10-06T17:25:53.675, value=American Airlines Inc.
+ info:dest timestamp=2026-10-06T17:25:53.791, value=PBI
+ info:distance timestamp=2026-10-06T17:25:54.090, value=2330
+ info:origin timestamp=2026-10-06T17:25:53.743, value=LAX
+ info:sched_dep timestamp=2026-10-06T17:25:53.903, value=0010
+ info:tail_no timestamp=2026-10-06T17:25:53.995, value=N3KUAA
+1 row(s)
+Took 6.1071 seconds
+hbase:007:0> 
+hbase:008:0> puts "=== STEP 2: EXECUTE DELETEALL ON ENTIRE ROW ==="
+=== STEP 2: EXECUTE DELETEALL ON ENTIRE ROW ===
+hbase:009:0> deleteall 'flights', 'AA#LAX#20150101#0010#02336#PBI'
+Took 0.0342 seconds
+hbase:010:0> 
+hbase:011:0> puts "=== STEP 3: VERIFY ROW DELETION (EXPECT 0 ROWS) ==="
+=== STEP 3: VERIFY ROW DELETION (EXPECT 0 ROWS) ===
+hbase:012:0> get 'flights', 'AA#LAX#20150101#0010#02336#PBI'
+COLUMN  CELL
+0 row(s)
+Took 0.0212 seconds
+hbase:013:0> 
+hbase:014:0> puts "=== STEP 4: VERIFY TABLE COUNT (EXPECT 5819078) ==="
+=== STEP 4: VERIFY TABLE COUNT (EXPECT 5819078) ===
+hbase:015:0> count 'flights', INTERVAL => 500000, CACHE => 10000
+Current count: 500000, row: AA#OGG#20150307#1441#00254#LAX
+Current count: 1000000, row: B6#HOU#20150126#1810#00932#BOS
+Current count: 1500000, row: DL#DCA#20150907#1200#02497#ATL
+Current count: 2000000, row: DL#SLC#20151012#1710#01830#JFK
+Current count: 2500000, row: EV#ORD#20150220#1315#05985#TVC
+Current count: 3000000, row: MQ#ORD#20150623#1205#03451#CID
+Current count: 3500000, row: OO#MSP#20150807#1310#04611#SBN
+Current count: 4000000, row: UA#IAH#20150825#2120#01099#SFO
+Current count: 4500000, row: VX#DAL#20150428#1400#00872#DCA
+Current count: 5000000, row: WN#HOU#20150212#0820#00449#MCI
+Current count: 5500000, row: WN#PHX#20150316#1335#00474#DEN
+5819078 row(s)
+Took 31.6949 seconds
+=> 5819078
+hbase:016:0> 
+hbase:017:0> puts "=== STEP 5: RESTORE ALL CELLS FROM DATASET ==="
+=== STEP 5: RESTORE ALL CELLS FROM DATASET ===
+hbase:018:0> put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:airline_name', 'American Airlines Inc.'
+Took 0.0109 seconds
+hbase:019:0> put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:origin', 'LAX'
+Took 0.0041 seconds
+hbase:020:0> put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:dest', 'PBI'
+Took 0.0039 seconds
+hbase:021:0> put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:sched_dep', '0010'
+Took 0.0040 seconds
+hbase:022:0> put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:tail_no', 'N3KUAA'
+Took 0.0042 seconds
+hbase:023:0> put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'info:distance', '2330'
+Took 0.0040 seconds
+hbase:024:0> put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'cancel:cancelled', '0'
+Took 0.0035 seconds
+hbase:025:0> put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'delay:dep_delay', '0000'
+Took 0.0072 seconds
+hbase:026:0> put 'flights', 'AA#LAX#20150101#0010#02336#PBI', 'delay:arr_delay', '0000'
+Took 0.0037 seconds
+hbase:027:0> 
+hbase:028:0> puts "=== STEP 6: VERIFY RESTORED ROW AND FINAL COUNT (EXPECT 5819079) ==="
+=== STEP 6: VERIFY RESTORED ROW AND FINAL COUNT (EXPECT 5819079) ===
+hbase:029:0> get 'flights', 'AA#LAX#20150101#0010#02336#PBI'
+COLUMN  CELL
+ cancel:cancelled timestamp=2026-10-07T08:07:06.372, value=0
+ delay:arr_delay timestamp=2026-10-07T08:07:06.412, value=0000
+ delay:dep_delay timestamp=2026-10-07T08:07:06.385, value=0000
+ info:airline_name timestamp=2026-10-07T08:07:06.291, value=American Airlines Inc.
+ info:dest timestamp=2026-10-07T08:07:06.317, value=PBI
+ info:distance timestamp=2026-10-07T08:07:06.361, value=2330
+ info:origin timestamp=2026-10-07T08:07:06.303, value=LAX
+ info:sched_dep timestamp=2026-10-07T08:07:06.329, value=0010
+ info:tail_no timestamp=2026-10-07T08:07:06.347, value=N3KUAA
+1 row(s)
+Took 0.0638 seconds
+hbase:030:0> count 'flights', INTERVAL => 500000, CACHE => 10000
+Current count: 500000, row: AA#OGG#20150306#2300#00014#LAX
+Current count: 1000000, row: B6#HOU#20150126#1114#00282#JFK
+Current count: 1500000, row: DL#DCA#20150907#1100#02253#ATL
+Current count: 2000000, row: DL#SLC#20151012#1710#01208#CVG
+Current count: 2500000, row: EV#ORD#20150220#1315#05911#PIA
+Current count: 3000000, row: MQ#ORD#20150623#1205#03377#BUF
+Current count: 3500000, row: OO#MSP#20150807#1305#04449#ATW
+Current count: 4000000, row: UA#IAH#20150825#2110#01693#SNA
+Current count: 4500000, row: VX#DAL#20150428#1330#00710#LGA
+Current count: 5000000, row: WN#HOU#20150212#0815#03671#MAF
+Current count: 5500000, row: WN#PHX#20150316#1325#01095#AUS
+5819079 row(s)
+Took 28.3071 seconds
+=> 5819079
+hbase:031:0> 
+hbase:001:0> 

@@ -1,0 +1,47 @@
+==================================================================
+      PREPROCESSING STATISTICS - FLIGHT DELAY INTELLIGENCE SYSTEM 
+==================================================================
+
+1. TOTAL ROWS IN SUBSET: 27,521
+
+2. NUMBER OF AIRLINES: 14
+   Airline Codes: AA, AS, B6, DL, EV, F9, HA, MQ, NK, OO, UA, US, VX, WN
+   Airline Breakdown:
+     - AA (American Airlines Inc.          ): 3,650
+     - AS (Alaska Airlines Inc.            ): 717
+     - B6 (JetBlue Airways                 ): 1,507
+     - DL (Delta Air Lines Inc.            ): 3,010
+     - EV (Atlantic Southeast Airlines     ): 2,737
+     - F9 (Frontier Airlines Inc.          ): 527
+     - HA (Hawaiian Airlines Inc.          ): 254
+     - MQ (American Eagle Airlines Inc.    ): 1,998
+     - NK (Spirit Air Lines                ): 837
+     - OO (Skywest Airlines Inc.           ): 3,150
+     - UA (United Air Lines Inc.           ): 2,751
+     - US (US Airways Inc.                 ): 910
+     - VX (Virgin America                  ): 153
+     - WN (Southwest Airlines Co.          ): 5,320
+
+3. ROWS PER MONTH (All 12 Months Represented):
+     - Month  1 (January  ): 2,501 rows
+     - Month  2 (February ): 2,501 rows
+     - Month  3 (March    ): 2,505 rows
+     - Month  4 (April    ): 2,500 rows
+     - Month  5 (May      ): 2,501 rows
+     - Month  6 (June     ): 2,500 rows
+     - Month  7 (July     ): 2,501 rows
+     - Month  8 (August   ): 2,502 rows
+     - Month  9 (September): 2,500 rows
+     - Month 10 (October  ): 0 rows
+     - Month 11 (November ): 2,511 rows
+     - Month 12 (December ): 2,499 rows
+
+4. CANCELLED FLIGHTS: 4,092 (14.87%)
+   CANCELLATION REASON BREAKDOWN:
+     - Reason 'A' (Carrier/Airline):       1,630 rows
+     - Reason 'B' (Weather):               1,743 rows
+     - Reason 'C' (National Airspace/NAS): 697 rows
+     - Reason 'D' (Security):              22 rows
+
+5. ROWS WITH ARRIVAL DELAY > 60 MINS: 9,647 (41.18% of operated flights)
+==================================================================

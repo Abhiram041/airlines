@@ -1,0 +1,119 @@
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by org.apache.hadoop.hbase.unsafe.HBasePlatformDependent (file:/mnt/c/Users/nanda/Downloads/airlines-delay-bda/java/target/flight-delay-hbase-1.0-SNAPSHOT.jar) to method java.nio.Bits.unaligned()
+WARNING: Please consider reporting this to the maintainers of org.apache.hadoop.hbase.unsafe.HBasePlatformDependent
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+==================================================================
+  FLIGHT DELAY INTELLIGENCE SYSTEM - APACHE HBASE JAVA CLIENT     
+  Course: 23CSE352 Big Data Analytics                             
+==================================================================
+log4j:WARN No appenders could be found for logger (org.apache.hadoop.util.Shell).
+log4j:WARN Please initialize the log4j system properly.
+log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
+[INFO] Connected successfully to Apache HBase Cluster.
+[INFO] Table flights already exists.
+[INFO] Table flights_by_airport already exists.
+[SUCCESS] Inserted sample real flight from CSV via Put API: WN#SMF#20150501#04927
+[INFO] Starting bulk load from CSV: /mnt/c/Users/nanda/Downloads/airlines-delay-bda/data/flights_subset.csv
+  Loaded 5000 records...
+  Loaded 10000 records...
+  Loaded 15000 records...
+  Loaded 20000 records...
+  Loaded 25000 records...
+[SUCCESS] Bulk loaded 27521 records into both tables in 3269 ms (8418.8 records/sec)
+
+=== OPERATION 1: GET SINGLE ROW (Direct Key Lookup) ===
+Query Target Row Key: WN#SMF#20150501#04927
+  RowKey: WN#SMF#20150501#04927
+    Airline: Southwest Airlines Co.
+    Route:   SMF -> SEA
+    SchedDep:2035
+    ArrDelay:0070 min
+    Status:  OPERATED
+
+=== OPERATION 2: SCAN WITH FILTERLIST (PrefixFilter + SingleColumnValueFilter) ===
+Criteria: American Airlines ('AA#') AND Arrival Delay > 60 mins ('binary:0060')
+Result #1:
+  RowKey: AA#ABQ#20150201#01184
+    Airline: American Airlines Inc.
+    Route:   ABQ -> DFW
+    SchedDep:0724
+    ArrDelay:0139 min
+    Status:  OPERATED
+Result #2:
+  RowKey: AA#ABQ#20150201#01377
+    Airline: American Airlines Inc.
+    Route:   ABQ -> DFW
+    SchedDep:1215
+    ArrDelay:0178 min
+    Status:  OPERATED
+Result #3:
+  RowKey: AA#ALB#20151101#01831
+    Airline: American Airlines Inc.
+    Route:   ALB -> CLT
+    SchedDep:0805
+    ArrDelay:0078 min
+    Status:  OPERATED
+Result #4:
+  RowKey: AA#ANC#20150901#00480
+    Airline: American Airlines Inc.
+    Route:   ANC -> PHX
+    SchedDep:0125
+    ArrDelay:0086 min
+    Status:  OPERATED
+Result #5:
+  RowKey: AA#ATL#20150401#00232
+    Airline: American Airlines Inc.
+    Route:   ATL -> DFW
+    SchedDep:1930
+    ArrDelay:0065 min
+    Status:  OPERATED
+Result #6:
+  RowKey: AA#ATL#20150401#00360
+    Airline: American Airlines Inc.
+    Route:   ATL -> DFW
+    SchedDep:1740
+    ArrDelay:0062 min
+    Status:  OPERATED
+Result #7:
+  RowKey: AA#ATL#20150401#01249
+    Airline: American Airlines Inc.
+    Route:   ATL -> LAX
+    SchedDep:1840
+    ArrDelay:0095 min
+    Status:  OPERATED
+Result #8:
+  RowKey: AA#ATL#20150402#00315
+    Airline: American Airlines Inc.
+    Route:   ATL -> DFW
+    SchedDep:0929
+    ArrDelay:0072 min
+    Status:  OPERATED
+Result #9:
+  RowKey: AA#ATL#20150902#00849
+    Airline: American Airlines Inc.
+    Route:   ATL -> PHL
+    SchedDep:1945
+    ArrDelay:0084 min
+    Status:  OPERATED
+Result #10:
+  RowKey: AA#ATL#20151101#01473
+    Airline: American Airlines Inc.
+    Route:   ATL -> DFW
+    SchedDep:1440
+    ArrDelay:0102 min
+    Status:  OPERATED
+[SUMMARY] Scan matched 10 rows in 197 ms.
+
+=== OPERATION 3: ROW-KEY DESIGN TRADE-OFF COMPARISON ===
+Query: 'All flights departing ORD on 20150201' (1 warm-up run + 5 timed runs without LIMIT)
+
+Performance Benchmark Results (1 Warm-up Discarded + 5 Timed Runs):
+1. [Optimized Table] 'flights_by_airport' (Prefix Scan):
+   Runs: [14, 13, 10, 11, 11] ms | Min: 10 ms | Median: 11 ms | Max: 14 ms | Rows matched: 178
+2. [Unoptimized Table] 'flights' (Full Scan + Column/Row Filters):
+   Runs: [597, 404, 350, 236, 206] ms | Min: 206 ms | Median: 350 ms | Max: 597 ms | Rows matched: 178
+--> Measured Speedup Range: 14.71x to 59.70x (Median: 31.82x faster, 11 ms vs 350 ms).
+    Note: Results vary across test runs depending on OS cache state; the performance gap expands further as table volume grows.
+
+[INFO] All Java API operations completed successfully. Closing connection.

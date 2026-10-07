@@ -1,0 +1,9 @@
+# 03_verify_count.hbase
+# Verify total row count of both tables after bulk loading
+# Using INTERVAL => 5000 and CACHE => 1000 for efficient server-side batching
+
+puts "Verifying row count in 'flights' table:"
+count 'flights', INTERVAL => 500000, CACHE => 10000
+
+puts "Verifying row count in 'flights_by_airport' table:"
+count 'flights_by_airport', INTERVAL => 500000, CACHE => 10000
